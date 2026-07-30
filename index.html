@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שיר בשלושים דקות — מדריך ליצירת שיר אישי עם AI</title>
+<meta name="description" content="מדריך אינטראקטיבי בעברית: יוצרים שיר אישי אמיתי למי שאתם אוהבים, בשלושים דקות, בלי ידע מוזיקלי ובלי להתקין כלום.">
+<meta property="og:title" content="שיר בשלושים דקות">
+<meta property="og:description" content="יוצרים שיר אישי למי שאתם אוהבים. בלי ידע מוזיקלי. בלי להתקין כלום.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="he_IL">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#12100e; --bg-soft:#1b1815; --card:#221e1a; --card-hi:#2b2621;
+  --line:#3a332c; --text:#f2ede6; --muted:#a89e92;
+  --accent:#e8a33d; --accent-soft:#c98a2e;
+  --good:#5fb87a; --bad:#d9705f;
+  --radius:16px; --max:760px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Heebo',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);
+  line-height:1.75;font-weight:300;-webkit-font-smoothing:antialiased}
+img,audio{max-width:100%}
+a{color:var(--accent)}
+
+#topbar{position:fixed;top:0;right:0;left:0;z-index:100;background:rgba(18,16,14,.92);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+#topbar .inner{max-width:var(--max);margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+#brand{font-weight:700;font-size:15px;letter-spacing:-.01em;white-space:nowrap}
+#brand span{color:var(--accent)}
+#bar-wrap{flex:1;height:6px;background:var(--card);border-radius:99px;overflow:hidden}
+#bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent-soft),var(--accent));
+  border-radius:99px;transition:width .45s cubic-bezier(.4,0,.2,1)}
+#count{font-size:13px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+main{max-width:var(--max);margin:0 auto;padding:92px 20px 120px}
+
+#hero{text-align:center;padding:36px 0 8px}
+#hero .kicker{display:inline-block;font-size:13px;letter-spacing:.08em;color:var(--accent);
+  border:1px solid var(--line);padding:6px 16px;border-radius:99px;margin-bottom:28px}
+#hero h1{font-size:clamp(34px,7vw,54px);font-weight:900;line-height:1.15;letter-spacing:-.02em;margin-bottom:20px}
+#hero h1 em{font-style:normal;color:var(--accent)}
+#hero .sub{font-size:clamp(17px,2.6vw,21px);color:var(--muted);max-width:520px;margin:0 auto 36px}
+
+.demo{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px;margin:32px 0;text-align:right}
+.demo h3{font-size:16px;font-weight:700;margin-bottom:6px}
+.demo p{font-size:14px;color:var(--muted);margin-bottom:16px}
+audio{width:100%;border-radius:8px}
+
+.cta{display:inline-block;background:var(--accent);color:#1a1510;font-weight:700;font-size:17px;
+  padding:15px 40px;border:none;border-radius:99px;cursor:pointer;font-family:inherit;
+  transition:transform .15s,box-shadow .15s}
+.cta:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(232,163,61,.28)}
+.cta:disabled{opacity:.5;cursor:default;transform:none;box-shadow:none}
+
+.facts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin:36px 0 8px}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 20px;min-width:120px}
+.fact b{display:block;font-size:22px;font-weight:700;color:var(--accent)}
+.fact span{font-size:13px;color:var(--muted)}
+
+.note{background:var(--bg-soft);border-right:3px solid var(--accent);border-radius:10px;
+  padding:16px 20px;margin:24px 0;font-size:15px;color:var(--muted)}
+.note b{color:var(--text);font-weight:500}
+
+.step{display:none;animation:fade .4s ease}
+.step.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+
+.step-head{border-bottom:1px solid var(--line);padding-bottom:22px;margin-bottom:30px}
+.step-meta{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.step-num{font-size:13px;color:var(--accent);font-weight:700;letter-spacing:.05em}
+.step-time{font-size:12px;color:var(--muted);background:var(--card);padding:3px 12px;border-radius:99px}
+.step h2{font-size:clamp(26px,5vw,36px);font-weight:800;line-height:1.25;letter-spacing:-.02em}
+.step-sub{color:var(--muted);font-size:17px;margin-top:10px}
+.step h3{font-size:19px;font-weight:700;margin:32px 0 12px}
+.step p{margin-bottom:16px;color:#ddd5cb}
+.step ul,.step ol{margin:0 0 20px;padding-right:22px;color:#ddd5cb}
+.step li{margin-bottom:9px}
+.step strong{font-weight:700;color:var(--text)}
+
+.copybox{background:var(--bg-soft);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:20px 0}
+.copybox .cb-head{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;
+  background:var(--card);border-bottom:1px solid var(--line)}
+.cb-label{font-size:12px;color:var(--muted);letter-spacing:.04em}
+.cb-btn{background:none;border:1px solid var(--line);color:var(--muted);font-family:inherit;
+  font-size:12px;padding:5px 14px;border-radius:99px;cursor:pointer;transition:all .15s}
+.cb-btn:hover{border-color:var(--accent);color:var(--accent)}
+.cb-btn.done{border-color:var(--good);color:var(--good)}
+.copybox pre{padding:18px;font-family:inherit;font-size:15.5px;line-height:1.95;
+  white-space:pre-wrap;word-break:break-word;color:#efe7dc}
+
+.qcard{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:12px}
+.qcard .qn{font-size:12px;color:var(--accent);font-weight:700;margin-bottom:6px}
+.qcard .qt{font-size:17px;font-weight:500;margin-bottom:6px}
+.qcard .qw{font-size:14px;color:var(--muted)}
+
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}
+@media(max-width:560px){.compare{grid-template-columns:1fr}}
+.comp{border-radius:12px;padding:16px 18px;font-size:15px}
+.comp.no{background:rgba(217,112,95,.09);border:1px solid rgba(217,112,95,.3)}
+.comp.yes{background:rgba(95,184,122,.09);border:1px solid rgba(95,184,122,.3)}
+.comp .tag{font-size:12px;font-weight:700;margin-bottom:8px;display:block}
+.comp.no .tag{color:var(--bad)}
+.comp.yes .tag{color:var(--good)}
+
+.quiz{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px;margin:36px 0 0}
+.quiz .qh{font-size:13px;color:var(--accent);font-weight:700;margin-bottom:10px}
+.quiz .qq{font-size:18px;font-weight:500;margin-bottom:18px}
+.opt{display:block;width:100%;text-align:right;background:var(--bg-soft);border:1px solid var(--line);
+  color:var(--text);font-family:inherit;font-size:15.5px;padding:14px 18px;border-radius:10px;
+  margin-bottom:9px;cursor:pointer;transition:all .15s}
+.opt:hover:not(:disabled){border-color:var(--accent);background:var(--card-hi)}
+.opt:disabled{cursor:default;opacity:.55}
+.opt.right{border-color:var(--good);background:rgba(95,184,122,.13);opacity:1}
+.opt.wrong{border-color:var(--bad);background:rgba(217,112,95,.13);opacity:1}
+.qfeed{margin-top:14px;font-size:15px;color:var(--good);display:none}
+.qfeed.show{display:block}
+
+.nav{display:flex;justify-content:space-between;gap:12px;margin-top:44px;padding-top:26px;border-top:1px solid var(--line)}
+.nav button{font-family:inherit;font-size:15.5px;font-weight:500;padding:13px 30px;border-radius:99px;
+  cursor:pointer;border:1px solid var(--line);background:none;color:var(--muted);transition:all .15s}
+.nav button:hover{border-color:var(--accent);color:var(--accent)}
+.nav button.primary{background:var(--accent);color:#1a1510;border-color:var(--accent);font-weight:700}
+.nav button.primary:hover{transform:translateY(-2px)}
+
+/* ---------- support (ko-fi) ---------- */
+.support{display:flex;align-items:center;gap:18px;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--radius);padding:20px 22px;margin:32px 0}
+.support .badge{width:46px;height:46px;flex-shrink:0;border-radius:14px;
+  background:linear-gradient(150deg,#ff7b78,#ff5e5b);display:flex;align-items:center;
+  justify-content:center;font-size:24px}
+.support .stxt{flex:1;min-width:0}
+.support h4{font-size:16px;font-weight:700;margin-bottom:4px}
+.support p{font-size:14px;color:var(--muted);margin:0 !important;line-height:1.6}
+.support a.sbtn{flex-shrink:0;background:#ff5e5b;color:#fff;font-weight:700;font-size:14px;
+  padding:11px 24px;border-radius:99px;text-decoration:none;white-space:nowrap;
+  transition:transform .15s,box-shadow .15s}
+.support a.sbtn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(255,94,91,.3)}
+@media(max-width:560px){
+  .support{flex-direction:column;text-align:center;gap:12px}
+  .support a.sbtn{width:100%;text-align:center;padding:13px}
+}
+
+#finish{text-align:center;padding:20px 0}
+#finish .big{font-size:52px;margin-bottom:16px}
+#finish h2{font-size:32px;font-weight:800;margin-bottom:14px}
+#finish p{color:var(--muted);max-width:480px;margin:0 auto 20px}
+.share{background:linear-gradient(160deg,var(--card-hi),var(--card));border:1px solid var(--accent-soft);
+  border-radius:var(--radius);padding:28px;margin:34px 0;text-align:right}
+.share h3{font-size:21px;font-weight:800;margin-bottom:10px}
+.share p{color:#ddd5cb;font-size:15.5px;margin-bottom:18px}
+
+footer{text-align:center;padding:40px 20px;color:var(--muted);font-size:14px;
+  border-top:1px solid var(--line);margin-top:60px}
+footer a{text-decoration:none}
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="inner">
+    <div id="brand">שיר ב<span>30 דקות</span></div>
+    <div id="bar-wrap"><div id="bar"></div></div>
+    <div id="count">0 / 7</div>
+  </div>
+</div>
+
+<main>
+
+<!-- ============ HERO ============ -->
+<section class="step active" id="s0">
+  <div id="hero">
+    <div class="kicker">מדריך אינטראקטיבי · בלי להתקין כלום</div>
+    <h1>תוך חצי שעה יהיה לכם <em>שיר אמיתי</em> בשביל מישהו שאתם אוהבים</h1>
+    <p class="sub">לא שיר גנרי. שיר עם השם שלהם, הבדיחות הפרטיות שלכם, והרגע שרק שניכם זוכרים.</p>
+    <button class="cta" onclick="go(1)">בואו נתחיל ←</button>
+  </div>
+
+  <!-- ⬇️ החליפו בקובץ שלכם: assets/demo.mp3 -->
+  <div class="demo">
+    <h3>ככה זה נשמע</h3>
+    <p>השיר הזה נוצר בעשרים דקות. כל מילה בו נכונה — השם, המקום, הבדיחה.</p>
+    <audio controls src="assets/demo.mp3"></audio>
+  </div>
+
+  <div class="facts">
+    <div class="fact"><b>30</b><span>דקות</span></div>
+    <div class="fact"><b>0</b><span>ידע מוזיקלי</span></div>
+    <div class="fact"><b>0₪</b><span>להתחיל</span></div>
+  </div>
+
+  <div class="note">
+    <b>מה צריך?</b> חשבון ב-<a href="https://suno.com" target="_blank" rel="noopener">Suno</a>
+    (יש גרסה חינמית שמספיקה לשיר ראשון) ועשר דקות של מחשבה על האדם שאתם כותבים לו.
+    זה הכל. אין התקנות, אין קוד, הכל עובד גם מהטלפון.
+  </div>
+
+  <div class="note">
+    <b>המדריך טקסטואלי.</b> אין סרטונים. קוראים, מעתיקים, מדביקים. בדקו שהפורמט מתאים לכם.
+  </div>
+</section>
+
+<!-- ============ STEP 1 ============ -->
+<section class="step" id="s1">
+  <div class="step-head">
+    <div class="step-meta"><span class="step-num">שלב 1 מתוך 7</span><span class="step-time">3 דקות</span></div>
+    <h2>בוחרים את האדם ואת הרגע</h2>
+    <p class="step-sub">ההחלטה הזו קובעת את כל השאר. אל תדלגו עליה.</p>
+  </div>
+
+  <p>הטעות הכי נפוצה היא להתחיל מ"אני רוצה לעשות שיר" ורק אחר כך לחשוב למי. זה מייצר שיר שנשמע
+  יפה ולא נוגע באף אחד.</p>
+  <p><strong>תתחילו מהאדם.</strong> ותתחילו מאדם ספציפי אחד — לא "המשפחה", לא "החברים מהעבודה".</p>
+
+  <h3>שלוש שאלות לפני שממשיכים</h3>
+  <ol>
+    <li><strong>למי?</strong> אדם אחד. שם פרטי.</li>
+    <li><strong>מתי הם ישמעו את זה?</strong> יום הולדת, חתונה, גיוס, סיום, פרידה, סתם יום שלישי.</li>
+    <li><strong>מה אתם רוצים שהם ירגישו?</strong> שמחה? געגוע? שהם חשובים? תבחרו אחד.</li>
+  </ol>
+
+  <div class="note">
+    <b>עצה:</b> "סתם יום שלישי" עובד מצוין. שיר בלי סיבה מפתיע הרבה יותר משיר ליום הולדת,
+    כי אף אחד לא מצפה לו.
+  </div>
+
+  <h3>למה זה משנה</h3>
+  <div class="compare">
+    <div class="comp no"><span class="tag">✕ בלי בחירה</span>"שיר יום הולדת שמח ומרגש למישהו מיוחד" — תקבלו משהו שנשמע כמו פרסומת לביטוח.</div>
+    <div class="comp yes"><span class="tag">✓ עם בחירה</span>"שיר לאמא, ליום ההולדת ה-60, שיגרום לה להרגיש שראינו כמה היא ויתרה" — עכשיו יש על מה לעבוד.</div>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="qh">🎯 בדיקת הבנה</div>
+    <div class="qq">ממה מתחילים?</div>
+    <button class="opt" onclick="ans(this,0)">מבחירת סגנון מוזיקלי</button>
+    <button class="opt" onclick="ans(this,1)">מאדם אחד ספציפי ומה שרוצים שירגיש</button>
+    <button class="opt" onclick="ans(this,2)">מכתיבת המילים</button>
+    <div class="qfeed">✓ בדיוק. כל שאר השלבים נגזרים מזה.</div>
+  </div>
+
+  <div class="nav">
+    <button onclick="go(0)">→ חזרה</button>
+    <button class="primary" onclick="go(2)">לשלב הבא ←</button>
+  </div>
+</section>
+
+<!-- ============ STEP 2 ============ -->
+<section class="step" id="s2">
+  <div class="step-head">
+    <div class="step-meta"><span class="step-num">שלב 2 מתוך 7</span><span class="step-time">7 דקות</span></div>
+    <h2>הראיון — שמונה שאלות</h2>
+    <p class="step-sub">זה החלק החשוב במדריך. אם תעשו רק אותו, כבר תצאו עם שיר טוב.</p>
+  </div>
+
+  <p>ההבדל בין שיר שמרגש לבין בינה מלאכותית שמייצרת קלישאות הוא <strong>אך ורק ברמת הפירוט
+  של מה שאתם נותנים לה</strong>. הכלי יודע לכתוב יפה. הוא לא יודע כלום על האדם שלכם.</p>
+  <p>ענו על שמונה השאלות האלה. בכתב. תשובות קצרות זה בסדר — אבל <strong>ספציפיות</strong>.</p>
+
+  <div class="qcard"><div class="qn">שאלה 1</div><div class="qt">איך קוראים להם — ואיך אתם קוראים להם באמת?</div><div class="qw">הכינוי עדיף על השם. אף אחד לא קורא לאשתו "רבקה" כשהוא מתרגש.</div></div>
+  <div class="qcard"><div class="qn">שאלה 2</div><div class="qt">מה האירוע, ומה מיוחד בו דווקא השנה?</div><div class="qw">"יום הולדת 40" זה כלום. "יום הולדת 40 ראשון בלי אבא" זה שיר.</div></div>
+  <div class="qcard"><div class="qn">שאלה 3</div><div class="qt">תארו רגע אחד ספציפי. לא סיפור — רגע.</div><div class="qw">איפה עמדתם, מה היה הריח, מה הם אמרו. הפרט הקטן הוא מה שעושה את זה אמיתי.</div></div>
+  <div class="qcard"><div class="qn">שאלה 4</div><div class="qt">מה המשפט שהם תמיד אומרים?</div><div class="qw">אם תשתלו אותו בפזמון — הם ייפלו מהכיסא.</div></div>
+  <div class="qcard"><div class="qn">שאלה 5</div><div class="qt">מה הם עושים שמצחיק רק אתכם?</div><div class="qw">הבדיחה הפרטית היא ההוכחה שהשיר נכתב עבורם ולא עבור אף אחד אחר.</div></div>
+  <div class="qcard"><div class="qn">שאלה 6</div><div class="qt">מה הייתם רוצים להגיד להם ולא אמרתם?</div><div class="qw">קחו את הזמן. זו בדרך כלל השורה שתגרום להם לבכות.</div></div>
+  <div class="qcard"><div class="qn">שאלה 7</div><div class="qt">איזו מוזיקה הם באמת אוהבים?</div><div class="qw">מה שהם שמים באוטו לבד — לא מה שהם אומרים שהם אוהבים.</div></div>
+  <div class="qcard"><div class="qn">שאלה 8</div><div class="qt">אם השיר יגרום להם לבכות — באיזו שורה?</div><div class="qw">אם אתם יודעים את התשובה, יש לכם שיר. אם לא, חזרו לשאלה 6.</div></div>
+
+  <div class="note">
+    <b>אל תדלגו על 3, 5 ו-6.</b> אלה השאלות שמייצרות את החומר שאי אפשר להמציא. בלעדיהן
+    יישאר לכם שיר יפה שיכול היה להיכתב לכל אחד.
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="qh">🎯 בדיקת הבנה</div>
+    <div class="qq">מה הופך שיר AI למרגש?</div>
+    <button class="opt" onclick="ans(this,0)">בחירת סגנון מוזיקלי מדויק</button>
+    <button class="opt" onclick="ans(this,1)">שימוש במודל המתקדם ביותר</button>
+    <button class="opt" onclick="ans(this,2)">פרטים ספציפיים שרק אתם יודעים</button>
+    <div class="qfeed">✓ נכון. הכלי חינמי לכולם — הפרטים הם שלכם בלבד.</div>
+  </div>
+
+  <div class="nav">
+    <button onclick="go(1)">→ חזרה</button>
+    <button class="primary" onclick="go(3)">לשלב הבא ←</button>
+  </div>
+</section>
+
+<!-- ============ STEP 3 ============ -->
+<section class="step" id="s3">
+  <div class="step-head">
+    <div class="step-meta"><span class="step-num">שלב 3 מתוך 7</span><span class="step-time">8 דקות</span></div>
+    <h2>הופכים תשובות למילים</h2>
+    <p class="step-sub">כאן נותנים ל-AI לעבוד — אבל עם החומר שלכם.</p>
+  </div>
+
+  <p>אל תכתבו את המילים לבד. תנו ל-<a href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT</a>
+  או ל-<a href="https://claude.ai" target="_blank" rel="noopener">Claude</a> לכתוב אותן — מהתשובות שלכם.</p>
+
+  <div class="copybox">
+    <div class="cb-head"><span class="cb-label">מה לכתוב ל-ChatGPT / Claude</span>
+      <button class="cb-btn" onclick="cp(this)">העתק</button></div>
+    <pre>אני רוצה לכתוב שיר אישי בעברית למישהו שאני אוהב.
+אני אתן לך פרטים, ואתה תכתוב מילים לשיר.
+
+הפרטים:
+1. שם/כינוי:
+2. האירוע ומה מיוחד בו השנה:
+3. רגע ספציפי שאני זוכר:
+4. משפט שהם תמיד אומרים:
+5. משהו שמצחיק רק אותנו:
+6. מה שרציתי להגיד ולא אמרתי:
+7. סגנון מוזיקלי שהם אוהבים:
+8. השורה שאמורה לרגש:
+
+כללים לכתיבה:
+- עברית טבעית ומדוברת, לא גבוהה ולא פיוטית
+- מבנה: בית, פזמון, בית, פזמון, גשר, פזמון
+- הפזמון קצר וחוזר על עצמו — הוא מה שיזכרו
+- תשתמש בפרטים הספציפיים שנתתי, לא בקלישאות
+- שורות קצרות. שיר זה לא מכתב.
+- בלי מילים נדירות או ספרותיות
+- תחזיר רק את המילים, בלי הסברים</pre>
+  </div>
+
+  <h3>אחרי שקיבלתם מילים</h3>
+  <p>כמעט תמיד הגרסה הראשונה תהיה קצת גנרית. תבקשו תיקון:</p>
+
+  <div class="copybox">
+    <div class="cb-head"><span class="cb-label">בקשת תיקון</span>
+      <button class="cb-btn" onclick="cp(this)">העתק</button></div>
+    <pre>זה יפה מדי וכללי מדי. תכתוב מחדש:
+- תוריד כל שורה שיכולה להיכתב לכל אדם אחר
+- תכניס את הפרט הספציפי מסעיף 3 לתוך הבית הראשון
+- תשים את המשפט מסעיף 4 בפזמון, בדיוק כמו שהוא נאמר
+- תדבר בגובה העיניים, כאילו אני מדבר איתם</pre>
+  </div>
+
+  <div class="note">
+    <b>מבחן פשוט:</b> קראו את המילים ותשאלו — האם השיר הזה יכול היה להיכתב למישהו אחר?
+    אם כן, הוא עוד לא מוכן.
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="qh">🎯 בדיקת הבנה</div>
+    <div class="qq">איך יודעים שהמילים מוכנות?</div>
+    <button class="opt" onclick="ans(this,0)">כשאי אפשר לכתוב אותן לאף אחד אחר</button>
+    <button class="opt" onclick="ans(this,1)">כשהן מתחרזות יפה</button>
+    <button class="opt" onclick="ans(this,2)">כשיש בהן לפחות שלושה בתים</button>
+    <div class="qfeed">✓ זה המבחן היחיד שחשוב.</div>
+  </div>
+
+  <div class="nav">
+    <button onclick="go(2)">→ חזרה</button>
+    <button class="primary" onclick="go(4)">לשלב הבא ←</button>
+  </div>
+</section>
+
+<!-- ============ STEP 4 — NIQQUD ============ -->
+<section class="step" id="s4">
+  <div class="step-head">
+    <div class="step-meta"><span class="step-num">שלב 4 מתוך 7</span><span class="step-time">5 דקות</span></div>
+    <h2>הסוד: ניקוד</h2>
+    <p class="step-sub">השלב שאף מדריך באנגלית לא יכול ללמד אתכם.</p>
+  </div>
+
+  <p>אם תדביקו עברית רגילה ל-<a href="https://suno.com" target="_blank" rel="noopener">Suno</a>,
+  הוא יבטא חלק מהמילים לא נכון. זה לא באג — זו בעיה מבנית, וברגע שמבינים אותה הפתרון פשוט.</p>
+
+  <h3>למה זה קורה</h3>
+  <p>ל-Suno אין מילון ואין כללי הגייה. הוא <strong>מנחש איך מילה נשמעת לפי איך שהיא נכתבת</strong>.
+  באנגלית זה עובד סביר, כי האותיות כוללות תנועות.</p>
+  <p>בעברית אין תנועות בכתב. המילה <strong>חבר</strong> יכולה להיות:</p>
+  <ul>
+    <li>חָבֵר — ידיד</li>
+    <li>חֶבֶר — קבוצה</li>
+    <li>חִבֵּר — הרכיב, כתב</li>
+  </ul>
+  <p>המידע פשוט לא קיים בטקסט. Suno חייב לנחש — ולפעמים הוא מנחש לא נכון.</p>
+
+  <h3>הפתרון</h3>
+  <p><strong>מנקדים.</strong> הניקוד מוסיף בדיוק את המידע שחסר, ו-Suno מבטא נכון.</p>
+
+  <div class="compare">
+    <div class="comp no"><span class="tag">✕ בלי ניקוד</span>החבר שלי תמיד פה<br><small style="color:var(--muted)">נשמע: "חֶבֶר" — המילה הלא נכונה</small></div>
+    <div class="comp yes"><span class="tag">✓ עם ניקוד</span>הֶחָבֵר שֶׁלִּי תָּמִיד פֹּה<br><small style="color:var(--muted)">נשמע: "חָבֵר" — בדיוק כמו שרצינו</small></div>
+  </div>
+
+  <h3>איך מנקדים בלי לדעת ניקוד</h3>
+  <p>לא צריך לזכור כלום מבית הספר. תבקשו מ-<a href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT</a>
+  או <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a>:</p>
+
+  <div class="copybox">
+    <div class="cb-head"><span class="cb-label">בקשת ניקוד</span>
+      <button class="cb-btn" onclick="cp(this)">העתק</button></div>
+    <pre>תנקד לי את מילות השיר הבאות ניקוד מלא ומדויק.
+תחזיר רק את הטקסט המנוקד, בלי הסברים ובלי שינויים במילים:
+
+[הדביקו כאן את המילים]</pre>
+  </div>
+
+  <div class="note">
+    <b>לא חייבים לנקד הכל.</b> תריצו קודם בלי ניקוד, תשמעו, ותנקדו רק את מה שיצא לא נכון.
+    הכי חשוב לנקד <b>שמות פרטיים</b> — שם שנהגה לא נכון הורס את כל הרגע.
+  </div>
+
+  <div class="support">
+    <div class="badge">☕</div>
+    <div class="stxt">
+      <h4>נהנים עד כאן?</h4>
+      <p>המדריך חינמי ויישאר חינמי. קפה עוזר לי להמשיך לכתוב עוד כאלה.</p>
+    </div>
+    <a class="sbtn" href="https://ko-fi.com/arieleli01" target="_blank" rel="noopener"
+       data-track="support_click">קנו לי קפה</a>
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="qh">🎯 בדיקת הבנה</div>
+    <div class="qq">למה Suno טועה בהגיית מילים בעברית?</div>
+    <button class="opt" onclick="ans(this,0)">כי הוא לא תומך בעברית</button>
+    <button class="opt" onclick="ans(this,1)">כי בכתב העברי אין תנועות, אז הוא חייב לנחש</button>
+    <button class="opt" onclick="ans(this,2)">כי הטקסט נכתב מימין לשמאל</button>
+    <div class="qfeed">✓ בדיוק — ולכן ניקוד פותר את זה.</div>
+  </div>
+
+  <div class="nav">
+    <button onclick="go(3)">→ חזרה</button>
+    <button class="primary" onclick="go(5)">לשלב הבא ←</button>
+  </div>
+</section>
+
+<!-- ============ STEP 5 ============ -->
+<section class="step" id="s5">
+  <div class="step-head">
+    <div class="step-meta"><span class="step-num">שלב 5 מתוך 7</span><span class="step-time">4 דקות</span></div>
+    <h2>בוחרים סגנון</h2>
+    <p class="step-sub">לפי הטעם שלהם. לא שלכם.</p>
+  </div>
+
+  <p>ב-<a href="https://suno.com" target="_blank" rel="noopener">Suno</a> יש שדה סגנון נפרד מהמילים.
+  מה שכותבים בו משנה הכל.</p>
+
+  <h3>הכלל</h3>
+  <p><strong>סגנון שקט וחשוף מנצח כמעט תמיד</strong> בשיר אישי. ככל שיש פחות כלים, כך שומעים
+  יותר את המילים — והמילים הן כל העניין. הפקה עשירה מסתירה בדיוק את מה שהשקעתם בו.</p>
+
+  <div class="copybox">
+    <div class="cb-head"><span class="cb-label">נקודת פתיחה טובה — שיר מרגש</span>
+      <button class="cb-btn" onclick="cp(this)">העתק</button></div>
+    <pre>acoustic ballad, warm male vocal, gentle guitar,
+sparse arrangement, clear diction, slow tempo,
+intimate and emotional, Hebrew</pre>
+  </div>
+
+  <div class="copybox">
+    <div class="cb-head"><span class="cb-label">שיר שמח / יום הולדת</span>
+      <button class="cb-btn" onclick="cp(this)">העתק</button></div>
+    <pre>upbeat mediterranean pop, bright female vocal,
+acoustic guitar and light percussion, joyful,
+clear diction, mid tempo, Hebrew</pre>
+  </div>
+
+  <ul>
+    <li><strong>clear diction</strong> — תמיד. זה משפר הגייה בעברית.</li>
+    <li><strong>slow / mid tempo</strong> — מהיר מדי בולע מילים.</li>
+    <li><strong>sparse</strong> — פחות כלים, יותר מילים.</li>
+    <li>תכתבו <strong>Hebrew</strong> בסוף.</li>
+  </ul>
+
+  <div class="note">
+    <b>קול גברי או נשי?</b> תחשבו מי "מדבר" בשיר — אתם. אם אתם גבר, קול גברי בדרך כלל
+    יישמע יותר אישי.
+  </div>
+
+  <div class="quiz" data-answer="2">
+    <div class="qh">🎯 בדיקת הבנה</div>
+    <div class="qq">איזה סגנון עדיף לשיר אישי?</div>
+    <button class="opt" onclick="ans(this,0)">הפקה עשירה עם הרבה כלים</button>
+    <button class="opt" onclick="ans(this,1)">קצב מהיר ואנרגטי</button>
+    <button class="opt" onclick="ans(this,2)">חשוף ואיטי, שישמעו את המילים</button>
+    <div class="qfeed">✓ המילים הן המתנה. ההפקה רק לא צריכה להפריע.</div>
+  </div>
+
+  <div class="nav">
+    <button onclick="go(4)">→ חזרה</button>
+    <button class="primary" onclick="go(6)">לשלב הבא ←</button>
+  </div>
+</section>
+
+<!-- ============ STEP 6 ============ -->
+<section class="step" id="s6">
+  <div class="step-head">
+    <div class="step-meta"><span class="step-num">שלב 6 מתוך 7</span><span class="step-time">5 דקות</span></div>
+    <h2>מייצרים, שופטים, מתקנים</h2>
+    <p class="step-sub">הגרסה הראשונה כמעט אף פעם לא הגרסה הסופית.</p>
+  </div>
+
+  <ol>
+    <li>נכנסים ל-<a href="https://suno.com/create" target="_blank" rel="noopener"><strong>Suno</strong></a> ובוחרים <strong>Custom</strong></li>
+    <li>מדביקים את המילים המנוקדות בשדה הלירי</li>
+    <li>מדביקים את הסגנון בשדה הסטייל</li>
+    <li>מייצרים — יתקבלו שתי גרסאות</li>
+  </ol>
+
+  <h3>איך שופטים</h3>
+  <p>אל תשאלו "האם זה יפה". תשאלו שלוש שאלות:</p>
+  <ul>
+    <li><strong>שומעים את כל המילים?</strong> אם לא — הסגנון עמוס מדי או הקצב מהיר מדי.</li>
+    <li><strong>השמות נהגים נכון?</strong> אם לא — חזרו לשלב 4 ונקדו אותם.</li>
+    <li><strong>הפזמון נתקע בראש?</strong> אם לא — הוא כנראה ארוך מדי. קצרו אותו.</li>
+  </ul>
+
+  <div class="note">
+    <b>תיקון נקודתי במקום ייצור מחדש:</b> אם רק שורה אחת יצאה לא טוב, השתמשו ב-
+    <a href="https://help.suno.com/en/articles/6141505" target="_blank" rel="noopener"><b>Song Editor → Replace Section</b></a>
+    ותייצרו מחדש רק אותה. חוסך זמן וקרדיטים, ושומר על מה שכבר עבד.
+    שימו לב — שינוי הטקסט לבד לא משנה את האודיו. חייבים לייצר מחדש.
+  </div>
+
+  <div class="note">
+    <b>תצפו לשלוש-ארבע גרסאות.</b> זה נורמלי לגמרי. אף אחד לא מקבל את זה מושלם בפעם הראשונה.
+  </div>
+
+  <div class="quiz" data-answer="1">
+    <div class="qh">🎯 בדיקת הבנה</div>
+    <div class="qq">שורה אחת יצאה לא טוב. מה עושים?</div>
+    <button class="opt" onclick="ans(this,0)">מייצרים את כל השיר מחדש</button>
+    <button class="opt" onclick="ans(this,1)">Replace Section — מתקנים רק אותה</button>
+    <button class="opt" onclick="ans(this,2)">מוחקים את השורה מהשיר</button>
+    <div class="qfeed">✓ חוסך קרדיטים ושומר על מה שכבר עבד.</div>
+  </div>
+
+  <div class="nav">
+    <button onclick="go(5)">→ חזרה</button>
+    <button class="primary" onclick="go(7)">לשלב האחרון ←</button>
+  </div>
+</section>
+
+<!-- ============ STEP 7 ============ -->
+<section class="step" id="s7">
+  <div class="step-head">
+    <div class="step-meta"><span class="step-num">שלב 7 מתוך 7</span><span class="step-time">3 דקות</span></div>
+    <h2>מוסרים את השיר</h2>
+    <p class="step-sub">החלק שהכי קל לפספס — ואולי החשוב ביותר.</p>
+  </div>
+
+  <p>עשיתם משהו יפה. אל תשלחו אותו בוואטסאפ בין שתי הודעות על קניות.</p>
+
+  <h3>שלושה כללים</h3>
+  <ul>
+    <li><strong>תהיו שם.</strong> פנים אל פנים או בשיחת וידאו. אתם רוצים לראות את הרגע הזה.</li>
+    <li><strong>אל תסבירו לפני.</strong> "עשיתי לך משהו, תשמעי" — זה הכל. הסברים הורסים הפתעות.</li>
+    <li><strong>שתקו בזמן ההשמעה.</strong> הדחף להתנצל על איכות ההפקה יהיה חזק. תתאפקו.</li>
+  </ul>
+
+  <div class="note">
+    <b>אם ישאלו "זה AI?"</b> — תגידו שכן, בלי להתנצל. המילים הן שלכם. הפרטים הם שלכם.
+    הזמן שהשקעתם במחשבה עליהם הוא שלכם. הכלי רק שר.
+  </div>
+
+  <div class="quiz" data-answer="0">
+    <div class="qh">🎯 בדיקת הבנה</div>
+    <div class="qq">מה הכי חשוב במסירה?</div>
+    <button class="opt" onclick="ans(this,0)">להיות נוכחים ולא להסביר מראש</button>
+    <button class="opt" onclick="ans(this,1)">לשלוח בלילה כשהם רגועים</button>
+    <button class="opt" onclick="ans(this,2)">להסביר קודם איך יצרתם את זה</button>
+    <div class="qfeed">✓ ההפתעה היא חצי מהמתנה.</div>
+  </div>
+
+  <div class="nav">
+    <button onclick="go(6)">→ חזרה</button>
+    <button class="primary" onclick="go(8)">סיימתי! ←</button>
+  </div>
+</section>
+
+<!-- ============ FINISH ============ -->
+<section class="step" id="s8">
+  <div id="finish">
+    <div class="big">🎵</div>
+    <h2>יש לכם שיר</h2>
+    <p>אם הוא גרם למישהו להצטמרר — עשיתם את זה נכון.</p>
+  </div>
+
+  <div class="share">
+    <h3>עשיתם שיר? בואו נשמע</h3>
+    <p>אני אוסף את השירים שנוצרו מהמדריך הזה. אם יצא לכם משהו שאתם גאים בו —
+    שלחו לי אותו. וגם אם משהו לא עבד, אני רוצה לדעת: זה מה שמשפר את המדריך.</p>
+    <!-- ⬇️ עדכנו את הקישור -->
+    <a class="cta" href="#" style="text-decoration:none">שלחו לי את השיר ←</a>
+  </div>
+
+  <div class="note">
+    <b>מכירים מישהו שיש לו אירוע בקרוב?</b> שלחו לו את הקישור. זה לוקח חצי שעה
+    ומחזיק זיכרון לשנים.
+  </div>
+
+  <div class="support">
+    <div class="badge">☕</div>
+    <div class="stxt">
+      <h4>אם השיר יצא טוב</h4>
+      <p>אין כאן פרסומות ואין מה למכור. אם המדריך עזר, קפה זו דרך יפה להגיד תודה.</p>
+    </div>
+    <a class="sbtn" href="https://ko-fi.com/arieleli01" target="_blank" rel="noopener"
+       data-track="support_click">קנו לי קפה</a>
+  </div>
+
+  <div class="note">
+    <b>שאלות?</b> יש קבוצה שפתחתי לכל מי שעובר את המדריך.
+    <!-- ⬇️ הכניסו קישור לקבוצה --> <a href="#">הצטרפו כאן</a>
+  </div>
+
+  <div class="nav">
+    <button onclick="go(7)">→ חזרה</button>
+    <button class="primary" onclick="go(0)">להתחיל מחדש</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  נבנה על ידי אריאל · <a href="#">לינקדאין</a> · <a href="#">צרו קשר</a>
+</footer>
+
+<!-- ============ ANALYTICS ============
+     בחרו ספק אחד והדביקו את התגית שלו כאן.
+     ממליץ: Umami Cloud (חינם, בלי עוגיות, בלי צורך בבאנר קוקיז)
+
+     <script defer src="https://cloud.umami.is/script.js"
+             data-website-id="YOUR_WEBSITE_ID"></script>
+
+     חלופה חינמית: GoatCounter
+     <script data-goatcounter="https://YOURNAME.goatcounter.com/count"
+             async src="//gc.zgo.at/count.js"></script>
+============================================ -->
+
+<script>
+var TOTAL = 7, cur = 0, seen = {};
+
+/* ---------- analytics: provider-agnostic ----------
+   עובד עם Umami / Plausible / GA4 — מה שיהיה מותקן.
+   אם אין אף אחד מהם, הפונקציה פשוט לא עושה כלום. */
+function track(name, props){
+  props = props || {};
+  try {
+    if (window.umami && typeof window.umami.track === 'function') {
+      window.umami.track(name, props);
+    } else if (typeof window.plausible === 'function') {
+      window.plausible(name, { props: props });
+    } else if (typeof window.gtag === 'function') {
+      window.gtag('event', name, props);
+    } else if (window.goatcounter && window.goatcounter.count) {
+      window.goatcounter.count({ path: 'event/' + name, event: true });
+    }
+  } catch(e){}
+}
+
+/* ---------- storage with in-memory fallback ---------- */
+var store = (function(){
+  try { localStorage.setItem('__t','1'); localStorage.removeItem('__t');
+        return { get:function(k){return localStorage.getItem(k)},
+                 set:function(k,v){localStorage.setItem(k,v)} }; }
+  catch(e){ var m={}; return { get:function(k){return m[k]||null},
+                               set:function(k,v){m[k]=v} }; }
+})();
+
+try { seen = JSON.parse(store.get('sn_steps')||'{}'); } catch(e){ seen = {}; }
+
+/* ---------- navigation ---------- */
+function go(n){
+  var el = document.getElementById('s' + n);
+  if(!el) return;
+  document.querySelectorAll('.step').forEach(function(s){ s.classList.remove('active'); });
+  el.classList.add('active');
+
+  var prev = cur; cur = n;
+
+  if (n >= 1 && n <= TOTAL) {
+    var isNew = !seen[n];
+    seen[n] = 1;
+    store.set('sn_steps', JSON.stringify(seen));
+    track('step_view', { step: n, first_time: isNew ? 1 : 0 });
+    if (n === 1 && prev === 0) track('guide_start');
+  }
+  if (n === 8) track('guide_complete', { steps_seen: Object.keys(seen).length });
+
+  paint();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function paint(){
+  var done = Object.keys(seen).length;
+  if (done > TOTAL) done = TOTAL;
+  document.getElementById('bar').style.width = (done/TOTAL*100) + '%';
+  document.getElementById('count').textContent = done + ' / ' + TOTAL;
+}
+
+/* ---------- copy ---------- */
+function cp(btn){
+  var box = btn.closest('.copybox');
+  var txt = box.querySelector('pre').innerText;
+  var label = box.querySelector('.cb-label').textContent.trim();
+  var done = function(){
+    var old = btn.textContent;
+    btn.textContent = '✓ הועתק'; btn.classList.add('done');
+    setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 1800);
+  };
+  track('copy', { block: label, step: cur });
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(txt).then(done, function(){ fallback(txt, done); });
+  } else { fallback(txt, done); }
+}
+
+function fallback(txt, cb){
+  var ta = document.createElement('textarea');
+  ta.value = txt; ta.style.position='fixed'; ta.style.opacity='0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); cb(); } catch(e){}
+  document.body.removeChild(ta);
+}
+
+/* ---------- quiz ---------- */
+function ans(btn, idx){
+  var quiz = btn.closest('.quiz');
+  var correct = parseInt(quiz.dataset.answer, 10);
+  quiz.querySelectorAll('.opt').forEach(function(o, i){
+    o.disabled = true;
+    if (i === correct) o.classList.add('right');
+  });
+  if (idx !== correct) btn.classList.add('wrong');
+  quiz.querySelector('.qfeed').classList.add('show');
+  track('quiz', { step: cur, correct: idx === correct ? 1 : 0 });
+}
+
+/* ---------- outbound link tracking (delegated) ---------- */
+document.addEventListener('click', function(e){
+  var a = e.target.closest('a[href]');
+  if (!a) return;
+  /* explicit tag wins — works no matter which payment link you end up using */
+  var tag = a.getAttribute('data-track');
+  if (tag) { track(tag, { step: cur }); return; }
+  var h = a.getAttribute('href') || '';
+  if (h.indexOf('suno.com') > -1)          track('suno_click',    { step: cur });
+  else if (h.indexOf('chatgpt.com') > -1)  track('chatgpt_click', { step: cur });
+  else if (h.indexOf('claude.ai') > -1)    track('claude_click',  { step: cur });
+});
+
+/* ---------- audio ---------- */
+document.addEventListener('play', function(e){
+  if (e.target.tagName === 'AUDIO') track('demo_play');
+}, true);
+
+paint();
+track('landing');
+</script>
+</body>
+</html>
