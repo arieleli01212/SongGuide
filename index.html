@@ -70,6 +70,39 @@ a{color:var(--accent)}
 
 main{max-width:var(--max);margin:0 auto;padding:92px 20px 120px}
 
+/* ---------- side stepper (desktop) ---------- */
+#sidenav{display:none}
+.sn-brand{font-weight:800;font-size:15px;letter-spacing:-.01em;margin-bottom:22px;padding-right:4px}
+.sn-brand span{color:var(--accent)}
+.sn-wrap{position:relative}
+.sn-wrap::before{content:'';position:absolute;top:16px;bottom:16px;right:15px;width:2px;
+  background:var(--line);border-radius:2px}
+.sn-list{list-style:none;margin:0;padding:0}
+.sn-fill{position:absolute;top:16px;right:15px;width:2px;height:0;border-radius:2px;
+  background:linear-gradient(180deg,var(--accent-soft),var(--accent));
+  transition:height .45s cubic-bezier(.4,0,.2,1)}
+.sn-item{display:flex;align-items:center;gap:11px;width:100%;background:none;border:none;
+  font-family:inherit;font-size:14px;font-weight:500;color:var(--muted);cursor:pointer;
+  padding:7px 4px;border-radius:10px;text-align:right;transition:color .15s,background .15s;
+  position:relative;z-index:1}
+.sn-item:hover{color:var(--text);background:var(--card-hi)}
+.sn-dot{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--bg);
+  border:2px solid var(--line);display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--muted);transition:all .2s}
+.sn-txt{line-height:1.35}
+.sn-item.done .sn-dot{background:var(--good);border-color:var(--good);color:#fff;font-size:13px}
+.sn-item.done{color:var(--text-body)}
+.sn-item.current{color:var(--accent);font-weight:800;background:var(--accent-wash)}
+.sn-item.current .sn-dot{background:var(--accent);border-color:var(--accent);color:#fff}
+.sn-item:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+@media(min-width:1180px){
+  #topbar{display:none}
+  main{padding-top:56px}
+  #sidenav{display:block;position:fixed;top:50%;transform:translateY(-50%);
+    left:calc(50% + 400px);width:196px;z-index:60}
+}
+
 #hero{text-align:center;padding:44px 0 8px;position:relative}
 #hero::before{content:'';position:absolute;top:-40px;right:50%;transform:translateX(50%);
   width:min(620px,105%);height:340px;pointer-events:none;z-index:-1;
@@ -420,6 +453,22 @@ footer a{text-decoration:none;font-weight:600}
     <div id="count">0 / 7</div>
   </div>
 </div>
+
+<nav id="sidenav" aria-label="שלבי המדריך">
+  <button class="sn-brand" onclick="go(0)" style="background:none;border:none;font-family:inherit;cursor:pointer;color:var(--text);display:block">שיר ב<span>15 דקות</span></button>
+  <div class="sn-wrap">
+  <div class="sn-fill" id="sn-fill"></div>
+  <ol class="sn-list">
+    <li><button class="sn-item" data-s="1" onclick="go(1)"><span class="sn-dot">1</span><span class="sn-txt">בוחרים את האדם</span></button></li>
+    <li><button class="sn-item" data-s="2" onclick="go(2)"><span class="sn-dot">2</span><span class="sn-txt">השאלון</span></button></li>
+    <li><button class="sn-item" data-s="3" onclick="go(3)"><span class="sn-dot">3</span><span class="sn-txt">כותבים את המילים</span></button></li>
+    <li><button class="sn-item" data-s="4" onclick="go(4)"><span class="sn-dot">4</span><span class="sn-txt">ניקוד</span></button></li>
+    <li><button class="sn-item" data-s="5" onclick="go(5)"><span class="sn-dot">5</span><span class="sn-txt">בוחרים סגנון</span></button></li>
+    <li><button class="sn-item" data-s="6" onclick="go(6)"><span class="sn-dot">6</span><span class="sn-txt">מייצרים את השיר</span></button></li>
+    <li><button class="sn-item" data-s="7" onclick="go(7)"><span class="sn-dot">7</span><span class="sn-txt">מוסרים</span></button></li>
+  </ol>
+  </div>
+</nav>
 
 <main>
 
@@ -962,6 +1011,40 @@ function paint(){
   if (done > TOTAL) done = TOTAL;
   document.getElementById('bar').style.width = (done/TOTAL*100) + '%';
   document.getElementById('count').textContent = done + ' / ' + TOTAL;
+  paintNav();
+}
+
+/* ---------- side stepper ---------- */
+function paintNav(){
+  var items = document.querySelectorAll('.sn-item');
+  if (!items.length) return;
+  items.forEach(function(b){
+    var n = parseInt(b.dataset.s, 10);
+    var isCur = (n === cur);
+    var isDone = !!seen[n] && !isCur;
+    b.classList.toggle('current', isCur);
+    b.classList.toggle('done', isDone);
+    b.querySelector('.sn-dot').textContent = isDone ? '✓' : n;
+    if (isCur) b.setAttribute('aria-current', 'step');
+    else b.removeAttribute('aria-current');
+  });
+  /* fill the connector line up to the furthest step reached */
+  var fill = document.getElementById('sn-fill');
+  if (fill) {
+    var maxN = 0;
+    for (var i = 1; i <= TOTAL; i++) if (seen[i]) maxN = i;
+    if (cur > maxN && cur <= TOTAL) maxN = cur;
+    var list = document.querySelector('.sn-list');
+    if (maxN > 0 && list) {
+      var target = document.querySelector('.sn-item[data-s="' + maxN + '"]');
+      if (target) {
+        var h = (target.offsetTop + target.offsetHeight / 2) - 16;
+        fill.style.height = Math.max(0, h) + 'px';
+      }
+    } else {
+      fill.style.height = '0px';
+    }
+  }
 }
 
 /* ================= questionnaire ================= */
