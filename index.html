@@ -58,15 +58,29 @@ body{font-family:'Heebo',system-ui,-apple-system,sans-serif;background:var(--bg)
 img,audio{max-width:100%}
 a{color:var(--accent)}
 
-#topbar{position:fixed;top:0;right:0;left:0;z-index:100;background:rgba(255,251,246,.9);
-  backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
-#topbar .inner{max-width:var(--max);margin:0 auto;padding:12px 20px;display:flex;align-items:center;gap:16px}
+#topbar{position:fixed;top:0;right:0;left:0;z-index:100;height:58px;
+  background:rgba(255,251,246,.94);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft)}
+#topbar .inner{max-width:var(--max);margin:0 auto;padding:0 16px;height:100%;
+  display:flex;align-items:center;gap:12px}
 #brand{font-weight:800;font-size:15px;letter-spacing:-.01em;white-space:nowrap}
 #brand span{color:var(--accent)}
-#bar-wrap{flex:1;height:7px;background:var(--line-soft);border-radius:99px;overflow:hidden}
+#bar-wrap{position:absolute;right:0;left:0;bottom:0;height:3px;background:var(--line-soft);overflow:hidden}
 #bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent-soft),var(--accent));
-  border-radius:99px;transition:width .45s cubic-bezier(.4,0,.2,1)}
+  transition:width .45s cubic-bezier(.4,0,.2,1)}
 #count{font-size:13px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+
+/* current-step button that opens the step list on phones */
+#stepbtn{flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;
+  background:var(--card);border:1.5px solid var(--line);border-radius:99px;
+  font-family:inherit;font-size:14px;font-weight:700;color:var(--text);
+  padding:8px 14px;cursor:pointer;transition:border-color .15s}
+#stepbtn:hover{border-color:var(--accent-soft)}
+#stepbtn .sb-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#stepbtn .sb-chev{flex-shrink:0;color:var(--accent);font-size:11px;transition:transform .2s}
+#stepbtn[aria-expanded="true"]{border-color:var(--accent);background:var(--accent-wash)}
+#stepbtn[aria-expanded="true"] .sb-chev{transform:rotate(180deg)}
+#navscrim{position:fixed;inset:0;z-index:80;background:rgba(43,33,28,.28);display:none}
+#navscrim.open{display:block}
 
 main{max-width:var(--max);margin:0 auto;padding:92px 20px 120px}
 
@@ -96,7 +110,22 @@ main{max-width:var(--max);margin:0 auto;padding:92px 20px 120px}
 .sn-item.current .sn-dot{background:var(--accent);border-color:var(--accent);color:#fff}
 .sn-item:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 
+/* phones + tablets: the same list opens as a sheet under the top bar */
+@media(max-width:1179px){
+  #sidenav{position:fixed;top:58px;right:0;left:0;z-index:90;
+    background:var(--card);border-bottom:1px solid var(--line);
+    box-shadow:var(--shadow-md);padding:12px 16px 16px;
+    max-height:calc(100vh - 58px);overflow-y:auto}
+  #sidenav.open{display:block}
+  #sidenav .sn-brand{display:none}
+  #sidenav .sn-list{max-width:var(--max);margin:0 auto}
+  #sidenav .sn-item{font-size:16px;padding:11px 8px}
+  #sidenav .sn-dot{width:27px;height:27px}
+  .sn-wrap{max-width:var(--max);margin:0 auto}
+}
+
 @media(min-width:1180px){
+  #stepbtn,#navscrim{display:none !important}
   #topbar{display:none}
   main{padding-top:56px}
   #sidenav{display:block;position:fixed;top:50%;transform:translateY(-50%);
@@ -449,10 +478,15 @@ footer a{text-decoration:none;font-weight:600}
 <div id="topbar">
   <div class="inner">
     <div id="brand">שיר ב<span>15 דקות</span></div>
-    <div id="bar-wrap"><div id="bar"></div></div>
+    <button id="stepbtn" onclick="toggleNav(event)" aria-expanded="false" aria-controls="sidenav">
+      <span class="sb-txt" id="sb-txt">מתחילים</span>
+      <span class="sb-chev" aria-hidden="true">▼</span>
+    </button>
     <div id="count">0 / 7</div>
   </div>
+  <div id="bar-wrap"><div id="bar"></div></div>
 </div>
+<div id="navscrim" onclick="closeNav()"></div>
 
 <nav id="sidenav" aria-label="שלבי המדריך">
   <button class="sn-brand" onclick="go(0)" style="background:none;border:none;font-family:inherit;cursor:pointer;color:var(--text);display:block">שיר ב<span>15 דקות</span></button>
@@ -1002,6 +1036,7 @@ function go(n){
   /* rebuild the prompt from saved answers whenever step 3 opens */
   if (n === 3) buildPrompt(false);
 
+  closeNav();
   paint();
   window.scrollTo({top:0, behavior:'smooth'});
 }
@@ -1014,8 +1049,39 @@ function paint(){
   paintNav();
 }
 
-/* ---------- side stepper ---------- */
+/* ---------- step nav: sidebar on desktop, sheet on phones ---------- */
+function navOpen(){ return document.getElementById('sidenav').classList.contains('open'); }
+
+function toggleNav(e){
+  if (e) e.stopPropagation();
+  navOpen() ? closeNav() : openNav();
+}
+function openNav(){
+  document.getElementById('sidenav').classList.add('open');
+  document.getElementById('navscrim').classList.add('open');
+  document.getElementById('stepbtn').setAttribute('aria-expanded','true');
+  track('nav_open', { step: cur });
+}
+function closeNav(){
+  document.getElementById('sidenav').classList.remove('open');
+  document.getElementById('navscrim').classList.remove('open');
+  document.getElementById('stepbtn').setAttribute('aria-expanded','false');
+}
+
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape' && navOpen()) closeNav();
+});
+
+function navLabel(){
+  if (cur === 0) return 'מתחילים';
+  if (cur === 8) return 'סיימתם';
+  var t = document.querySelector('.sn-item[data-s="' + cur + '"] .sn-txt');
+  return t ? ('שלב ' + cur + ' · ' + t.textContent) : 'מתחילים';
+}
+
 function paintNav(){
+  var lbl = document.getElementById('sb-txt');
+  if (lbl) lbl.textContent = navLabel();
   var items = document.querySelectorAll('.sn-item');
   if (!items.length) return;
   items.forEach(function(b){
