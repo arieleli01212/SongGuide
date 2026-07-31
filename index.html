@@ -166,6 +166,14 @@ audio{width:100%;border-radius:10px}
   padding:16px 20px;margin:24px 0;font-size:15px;color:var(--text-body)}
 .note b{color:var(--text);font-weight:700}
 
+ol.howto{margin:20px 0 24px;padding-right:24px;list-style:none;counter-reset:howto}
+ol.howto li{position:relative;counter-increment:howto;margin-bottom:14px;padding-right:44px;
+  font-size:16px;color:var(--text-body);line-height:1.7}
+ol.howto li::before{content:counter(howto);position:absolute;right:0;top:2px;
+  width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;
+  font-size:14px;font-weight:700;display:flex;align-items:center;justify-content:center}
+ol.howto li b{color:var(--text);font-weight:700}
+
 .step{display:none;animation:fade .4s ease}
 .step.active{display:block}
 @keyframes fade{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
@@ -371,8 +379,8 @@ footer a{text-decoration:none;font-weight:600}
         {
           "@type": "HowToStep",
           "position": 4,
-          "name": "מנקדים את המילים",
-          "text": "מנקדים במיוחד שמות פרטיים ומילים שעלולות להיקרא לא נכון. מודלי שירה לא מזהים הגייה נכונה בעברית ללא ניקוד, וזו הסיבה הנפוצה ביותר לשמות משובשים בשיר.",
+          "name": "מנקדים את המילים בעזרת הנקדן של דיקטה",
+          "text": "מדביקים את מילות השיר בנקדן החינמי של דיקטה בכתובת nakdan.dicta.org.il. הניקוד מתווסף תוך כדי הקלדה, ולחיצה על מילה מציגה ניקודים חלופיים כולל אפשרות המסומנת ״שם פרטי״ עבור שמות. מעתיקים בעזרת כפתור ההעתקה. מודלי שירה לא מזהים הגייה נכונה בעברית ללא ניקוד, וזו הסיבה הנפוצה ביותר לשמות משובשים בשיר. כלי ניקוד ייעודי מדויק יותר ממודל שפה כללי, שנוטה לטעות בניקוד בלי לסמן חוסר ודאות.",
           "url": "https://songuide.open-spaces.xyz/#s4"
         },
         {
@@ -440,7 +448,7 @@ footer a{text-decoration:none;font-weight:600}
           "name": "איך גורמים ל-AI לבטא נכון שמות בעברית בשיר?",
           "acceptedAnswer": {
             "@type": "Answer",
-            "text": "מנקדים אותם. מודלי יצירת שירה לא מסיקים הגייה נכונה מכתיב עברי חסר ניקוד, ולכן שמות פרטיים יוצאים משובשים. ניקוד של השמות והמילים הבעייתיות בטקסט הלירי לפני הייצור פותר את רוב מקרי ההגייה השגויה."
+            "text": "מנקדים אותם לפני הייצור. מודלי יצירת שירה לא מסיקים הגייה נכונה מכתיב עברי חסר ניקוד, ולכן שמות פרטיים יוצאים משובשים. הדרך המהירה היא הנקדן החינמי של דיקטה בכתובת nakdan.dicta.org.il: מדביקים את מילות השיר, הניקוד מתווסף אוטומטית, ולחיצה על מילה מציגה ניקודים חלופיים כולל אפשרות ״שם פרטי״ לשמות. עדיף על בקשת ניקוד ממודל שפה כללי, שנוטה לשגות בניקוד בלי לסמן חוסר ודאות."
           }
         },
         {
@@ -744,21 +752,26 @@ footer a{text-decoration:none;font-weight:600}
   </div>
 
   <h3>איך מנקדים בלי לדעת ניקוד</h3>
-  <p>לא צריך לזכור כלום מבית הספר. תבקשו מ-<a href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT</a>
-  או <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a>:</p>
+  <p>לא צריך לזכור כלום מבית הספר, ולא צריך לבקש את זה ממודל שפה. יש כלי ישראלי חינמי
+  שבנוי בדיוק בשביל זה: <a href="https://nakdan.dicta.org.il/" target="_blank" rel="noopener">הנקדן של דיקטה</a>.</p>
 
-  <div class="copybox">
-    <div class="cb-head"><span class="cb-label">בקשת ניקוד</span>
-      <button class="cb-btn" onclick="cp(this)">העתק</button></div>
-    <pre>תנקד לי את מילות השיר הבאות ניקוד מלא ומדויק.
-תחזיר רק את הטקסט המנוקד, בלי הסברים ובלי שינויים במילים:
+  <ol class="howto">
+    <li>נכנסים ל-<a href="https://nakdan.dicta.org.il/" target="_blank" rel="noopener">nakdan.dicta.org.il</a> ומדביקים את מילות השיר בתיבה.</li>
+    <li>הניקוד מופיע <b>תוך כדי הקלדה</b>. אין כפתור, אין הרשמה, עד 5,000 תווים.</li>
+    <li>לוחצים על מילה כדי לראות ניקודים חלופיים. לשמות יש אפשרות שמסומנת <b>״שם פרטי״</b> — בוחרים אותה.</li>
+    <li>מעתיקים בעזרת כפתור ההעתקה שבתיבה. <b>אל תסמנו ותעתיקו ידנית</b> — הניקוד עלול לא לעבור.</li>
+  </ol>
 
-[הדביקו כאן את המילים]</pre>
+  <div class="note">
+    <b>למה דווקא דיקטה ולא ChatGPT?</b> ניקוד הוא לא משימה של ניחוש טקסט אלא של ניתוח מורפולוגי,
+    ומודלי שפה טועים בו הרבה — ובעיקר טועים בשקט, בלי לסמן שהם לא בטוחים.
+    הנקדן של דיקטה נבנה למשימה הזו, ובמילים דו-משמעיות הוא <b>מציע לכם לבחור</b> במקום לנחש במקומכם.
   </div>
 
   <div class="note">
     <b>לא חייבים לנקד הכל.</b> תריצו קודם בלי ניקוד, תשמעו, ותנקדו רק את מה שיצא לא נכון.
     הכי חשוב לנקד <b>שמות פרטיים</b> — שם שנהגה לא נכון הורס את כל הרגע.
+    זו בדיוק הנקודה שבה האפשרות ״שם פרטי״ בדיקטה שווה את כל השלב.
   </div>
 
   <div class="support">

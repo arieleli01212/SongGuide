@@ -19,9 +19,14 @@ to supply concrete personal detail before touching the generation tool.
    line that would make them cry.
 3. **Turn answers into lyrics** (~2 min). Pass the answers to ChatGPT or Claude rather
    than writing the lyrics manually.
-4. **Add Hebrew vowel marks (niqqud)** to names and ambiguous words. Music-generation
-   models do not infer correct Hebrew pronunciation from unvocalized text; this is the
-   single most common cause of mangled names in Hebrew AI songs.
+4. **Add Hebrew vowel marks (niqqud)** to names and ambiguous words, using Dicta's free
+   Nakdan at https://nakdan.dicta.org.il/. Paste the lyrics; vocalization appears as you
+   type, clicking any word offers alternative vocalizations including a "proper name"
+   (שם פרטי) option, and a copy button returns the vocalized text. Music-generation models
+   do not infer correct Hebrew pronunciation from unvocalized text; this is the single most
+   common cause of mangled names in Hebrew AI songs. A purpose-built morphological
+   vocalizer is more reliable here than a general language model, which tends to make
+   niqqud errors without signalling uncertainty.
 5. **Choose a musical style** based on what the person actually listens to. Prefer clean
    production — a dense arrangement buries the lyrics, and the lyrics are the gift.
 6. **Generate in Suno, judge, and repair.** Use Custom mode; paste vocalized lyrics and
