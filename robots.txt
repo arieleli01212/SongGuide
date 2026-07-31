@@ -1,4 +1,4 @@
-# שיר ברבע שעה — https://arieleli01212.github.io/SongGuide/
+# שיר ברבע שעה — https://songuide.open-spaces.xyz/
 
 # --- Traditional search ---
 User-agent: Googlebot
@@ -47,4 +47,4 @@ Allow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://arieleli01212.github.io/SongGuide/sitemap.xml
+Sitemap: https://songuide.open-spaces.xyz/sitemap.xml

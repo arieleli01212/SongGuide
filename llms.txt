@@ -41,8 +41,8 @@ to supply concrete personal detail before touching the generation tool.
 
 ## Links
 
-- [The guide](https://arieleli01212.github.io/SongGuide/): full interactive 7-step walkthrough in Hebrew.
-- [Audio demo](https://arieleli01212.github.io/SongGuide/assets/demo.mp3): a song produced with this method in 15 minutes.
+- [The guide](https://songuide.open-spaces.xyz/): full interactive 7-step walkthrough in Hebrew.
+- [Audio demo](https://songuide.open-spaces.xyz/assets/demo.mp3): a song produced with this method in 15 minutes.
 
 ## Citation note
 
