@@ -146,6 +146,7 @@ main{max-width:var(--max);margin:0 auto;padding:92px 20px 120px}
 
 .demo{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
   padding:24px;margin:34px 0;text-align:right;box-shadow:var(--shadow-md)}
+.demo-hero{margin:0 auto 28px;max-width:520px;text-align:right}
 .demo h3{font-size:17px;font-weight:800;margin-bottom:6px}
 .demo p{font-size:14.5px;color:var(--muted);margin-bottom:16px}
 audio{width:100%;border-radius:10px}
@@ -520,13 +521,13 @@ footer a{text-decoration:none;font-weight:600}
     <div class="kicker">מדריך אינטראקטיבי · בלי להתקין כלום</div>
     <h1>תוך רבע שעה יהיה לכם <em>שיר אמיתי</em> בשביל מישהו שאתם אוהבים</h1>
     <p class="sub">לא שיר גנרי. שיר עם השם שלהם, הבדיחות הפרטיות שלכם, והרגע שרק שניכם זוכרים.</p>
-    <button class="cta" onclick="go(1)">בואו נתחיל ←</button>
-  </div>
+    <div class="demo demo-hero">
+      <h3>ככה זה נשמע</h3>
+      <p>השיר הזה נוצר ברבע שעה. כל מילה בו נכונה — השם, המקום, הבדיחה.</p>
+      <audio controls src="assets/demo.mp3"></audio>
+    </div>
 
-  <div class="demo">
-    <h3>ככה זה נשמע</h3>
-    <p>השיר הזה נוצר ברבע שעה. כל מילה בו נכונה — השם, המקום, הבדיחה.</p>
-    <audio controls src="assets/demo.mp3"></audio>
+    <button class="cta" onclick="go(1)">בואו נתחיל ←</button>
   </div>
 
   <div class="facts">
@@ -1323,7 +1324,7 @@ document.addEventListener('click', function(e){
 
 /* ---------- audio ---------- */
 document.addEventListener('play', function(e){
-  if (e.target.tagName === 'AUDIO') track('demo_play');
+  if (e.target.tagName === 'AUDIO') track('demo_play', { step: cur, before_start: cur === 0 ? 1 : 0 });
 }, true);
 
 /* ---------- exit depth ----------
