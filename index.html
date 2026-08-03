@@ -1043,8 +1043,11 @@ function go(n){
     store.set('sn_steps', JSON.stringify(seen));
     track('step_view', { step: n, first_time: isNew ? 1 : 0 });
     if (n === 1 && prev === 0) track('guide_start');
+    /* real completion: they reached the last step of actual content.
+       Nobody clicks the outro button — they go and give someone the song. */
+    if (n === TOTAL && isNew) track('guide_complete', { steps_seen: Object.keys(seen).length });
   }
-  if (n === 8) track('guide_complete', { steps_seen: Object.keys(seen).length });
+  if (n === 8) track('outro_click');
 
   /* rebuild the prompt from saved answers whenever step 3 opens */
   if (n === 3) buildPrompt(false);
@@ -1236,6 +1239,7 @@ function cpGen(btn){
     btn.textContent = '✓ הועתק'; btn.classList.add('done');
     setTimeout(function(){ btn.textContent = old; btn.classList.remove('done'); }, 1800);
   };
+  store.set('sn_copied','1');
   track('copy', { block: 'generated_prompt', step: cur, filled: filledCount() });
   if (navigator.clipboard && navigator.clipboard.writeText) {
     navigator.clipboard.writeText(ta.value).then(done, function(){ fallback(ta.value, done); });
@@ -1296,6 +1300,29 @@ document.addEventListener('click', function(e){
 document.addEventListener('play', function(e){
   if (e.target.tagName === 'AUDIO') track('demo_play');
 }, true);
+
+/* ---------- exit depth ----------
+   Most people never click anything on the way out, so without this we
+   only learn about the ones who finish. Fires once, when the tab is
+   hidden or closed, with how far they actually got. */
+var exitSent = false;
+function sendExit(){
+  if (exitSent) return;
+  exitSent = true;
+  var maxStep = 0;
+  for (var i = 1; i <= TOTAL; i++) if (seen[i]) maxStep = i;
+  track('exit', {
+    max_step: maxStep,
+    answers: filledCount(),
+    copied: store.get('sn_copied') ? 1 : 0,
+    seconds: Math.round((Date.now() - startedAt) / 1000)
+  });
+}
+var startedAt = Date.now();
+document.addEventListener('visibilitychange', function(){
+  if (document.visibilityState === 'hidden') sendExit();
+});
+window.addEventListener('pagehide', sendExit);
 
 initForm();
 initPrompt();
