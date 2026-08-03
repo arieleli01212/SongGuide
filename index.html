@@ -1002,20 +1002,45 @@ var TOTAL = 7, cur = 0, seen = {};
 /* ---------- analytics: provider-agnostic ----------
    עובד עם Umami / Plausible / GA4 — מה שיהיה מותקן.
    אם אין אף אחד מהם, הפונקציה פשוט לא עושה כלום. */
+/* The analytics script is deferred, so it is NOT ready when this file
+   finishes parsing. Anything tracked at load time (landing) was being
+   silently dropped. Queue until a provider exists, then flush. */
+var _queue = [];
+
+function _provider(){
+  if (window.umami && typeof window.umami.track === 'function')
+    return function(n,p){ window.umami.track(n,p); };
+  if (typeof window.plausible === 'function')
+    return function(n,p){ window.plausible(n,{ props:p }); };
+  if (typeof window.gtag === 'function')
+    return function(n,p){ window.gtag('event',n,p); };
+  if (window.goatcounter && window.goatcounter.count)
+    return function(n){ window.goatcounter.count({ path:'event/'+n, event:true }); };
+  return null;
+}
+
+function _flush(){
+  var send = _provider();
+  if (!send) return false;
+  while (_queue.length) {
+    var e = _queue.shift();
+    try { send(e[0], e[1]); } catch(err){}
+  }
+  return true;
+}
+
 function track(name, props){
   props = props || {};
-  try {
-    if (window.umami && typeof window.umami.track === 'function') {
-      window.umami.track(name, props);
-    } else if (typeof window.plausible === 'function') {
-      window.plausible(name, { props: props });
-    } else if (typeof window.gtag === 'function') {
-      window.gtag('event', name, props);
-    } else if (window.goatcounter && window.goatcounter.count) {
-      window.goatcounter.count({ path: 'event/' + name, event: true });
-    }
-  } catch(e){}
+  var send = _provider();
+  if (send) { try { send(name, props); } catch(e){} return; }
+  if (_queue.length < 60) _queue.push([name, props]);
 }
+
+var _tries = 0;
+var _poll = setInterval(function(){
+  if (_flush() || ++_tries > 40) clearInterval(_poll);
+}, 250);
+window.addEventListener('load', _flush);
 
 /* ---------- storage with in-memory fallback ---------- */
 var store = (function(){
