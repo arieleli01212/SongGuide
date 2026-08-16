@@ -47,6 +47,7 @@ to supply concrete personal detail before touching the generation tool.
 ## Links
 
 - [The guide](https://songuide.open-spaces.xyz/): full interactive 7-step walkthrough in Hebrew.
+- [English guide](https://songuide.open-spaces.xyz/en/): adapted English version with browser-language detection and a manual language switch.
 - [Audio demo](https://songuide.open-spaces.xyz/assets/demo.mp3): a song produced with this method in 15 minutes.
 
 ## Citation note

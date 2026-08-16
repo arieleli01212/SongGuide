@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Song in 15 Minutes — Create a Personal AI Song | Suno Guide</title>
+<meta name="description" content="A free, interactive 7-step guide to creating a genuinely personal AI song in about 15 minutes with Suno and ChatGPT or Claude. No musical experience required.">
+<link rel="canonical" href="https://songuide.open-spaces.xyz/en/">
+<link rel="alternate" hreflang="he-IL" href="https://songuide.open-spaces.xyz/">
+<link rel="alternate" hreflang="en" href="https://songuide.open-spaces.xyz/en/">
+<link rel="alternate" hreflang="x-default" href="https://songuide.open-spaces.xyz/">
+<script>
+(function(){
+  var key = 'songuide_language';
+  window.setGuideLanguage = function(lang){
+    try { localStorage.setItem(key, lang); } catch(e){}
+  };
+})();
+</script>
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="author" content="Ariel Elisheiev">
+<meta property="og:title" content="Song in 15 Minutes — Create a Personal AI Song">
+<meta property="og:description" content="Seven practical steps to turn real memories into a song for someone you love. No musical experience required.">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:locale:alternate" content="he_IL">
+<meta property="og:url" content="https://songuide.open-spaces.xyz/en/">
+<meta property="og:site_name" content="Song in 15 Minutes">
+<meta property="og:image" content="https://songuide.open-spaces.xyz/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Song in 15 Minutes — a personal AI song guide">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Song in 15 Minutes — Create a Personal AI Song">
+<meta name="twitter:description" content="A free, interactive 7-step guide. No musical experience required.">
+<meta name="twitter:image" content="https://songuide.open-spaces.xyz/assets/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="guide.css">
+<style>
+body{text-align:left}
+.sn-wrap::before{right:auto;left:15px}
+.sn-fill{right:auto;left:15px}
+.sn-item,.ans,.gen textarea,.opt,.demo,.share{text-align:left}
+.side-lang{margin-right:0;margin-left:4px}
+.note{border-right:0;border-left:3px solid var(--accent-soft)}
+ol.howto,.step ul,.step ol{padding-right:0;padding-left:24px}
+ol.howto li{padding-right:0;padding-left:44px}
+ol.howto li::before{right:auto;left:0}
+@media(min-width:1180px){#sidenav{left:auto;right:calc(50% + 400px)}}
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://songuide.open-spaces.xyz/en/#website",
+      "url": "https://songuide.open-spaces.xyz/en/",
+      "name": "Song in 15 Minutes",
+      "description": "A free interactive guide to creating a personal song with AI",
+      "inLanguage": "en",
+      "publisher": { "@id": "https://songuide.open-spaces.xyz/#author" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://songuide.open-spaces.xyz/#author",
+      "name": "Ariel Elisheiev",
+      "url": "https://songuide.open-spaces.xyz/",
+      "jobTitle": "AIOps Team Lead",
+      "knowsAbout": ["Artificial intelligence", "AI music creation", "Suno", "Prompt engineering"],
+      "sameAs": ["https://github.com/arieleli01212", "https://www.linkedin.com/in/ariel-elishayev-0ba10a346"]
+    },
+    {
+      "@type": "HowTo",
+      "@id": "https://songuide.open-spaces.xyz/en/#howto",
+      "name": "How to create a personal song with AI",
+      "description": "Seven practical steps for turning personal details into a custom song with Suno and ChatGPT or Claude in about 15 minutes.",
+      "inLanguage": "en",
+      "totalTime": "PT15M",
+      "estimatedCost": { "@type": "MonetaryAmount", "currency": "USD", "value": "0" },
+      "image": "https://songuide.open-spaces.xyz/assets/og.png",
+      "author": { "@id": "https://songuide.open-spaces.xyz/#author" },
+      "supply": [
+        { "@type": "HowToSupply", "name": "A Suno account (the free plan is enough for a first song)" },
+        { "@type": "HowToSupply", "name": "Access to ChatGPT or Claude for writing the lyrics" }
+      ],
+      "tool": [{ "@type": "HowToTool", "name": "A phone or computer with a web browser" }],
+      "step": [
+        { "@type": "HowToStep", "position": 1, "name": "Choose one person and one moment", "url": "https://songuide.open-spaces.xyz/en/#s1" },
+        { "@type": "HowToStep", "position": 2, "name": "Answer eight personal questions", "url": "https://songuide.open-spaces.xyz/en/#s2" },
+        { "@type": "HowToStep", "position": 3, "name": "Turn the answers into lyrics", "url": "https://songuide.open-spaces.xyz/en/#s3" },
+        { "@type": "HowToStep", "position": 4, "name": "Check names and pronunciation", "url": "https://songuide.open-spaces.xyz/en/#s4" },
+        { "@type": "HowToStep", "position": 5, "name": "Choose a musical style", "url": "https://songuide.open-spaces.xyz/en/#s5" },
+        { "@type": "HowToStep", "position": 6, "name": "Generate, judge, and repair", "url": "https://songuide.open-spaces.xyz/en/#s6" },
+        { "@type": "HowToStep", "position": 7, "name": "Deliver the song", "url": "https://songuide.open-spaces.xyz/en/#s7" }
+      ]
+    }
+  ]
+}
+</script>
+</head>
+<body>
+
+<div id="topbar">
+  <div class="inner">
+    <div id="brand">Song in <span>15 minutes</span></div>
+    <button id="stepbtn" onclick="toggleNav(event)" aria-expanded="false" aria-controls="sidenav">
+      <span class="sb-txt" id="sb-txt">Start here</span>
+      <span class="sb-chev" aria-hidden="true">▼</span>
+    </button>
+    <div id="count">0 / 7</div>
+    <a class="lang-link top-lang" href="../" lang="he" hreflang="he-IL"
+       onclick="setGuideLanguage('he')" aria-label="החלפת שפת המדריך לעברית">עברית</a>
+  </div>
+  <div id="bar-wrap"><div id="bar"></div></div>
+</div>
+<div id="navscrim" onclick="closeNav()"></div>
+
+<nav id="sidenav" aria-label="Guide steps">
+  <button class="sn-brand" onclick="go(0)" style="background:none;border:none;font-family:inherit;cursor:pointer;color:var(--text);display:block">Song in <span>15 minutes</span></button>
+  <a class="lang-link side-lang" href="../" lang="he" hreflang="he-IL"
+     onclick="setGuideLanguage('he')" aria-label="החלפת שפת המדריך לעברית">עברית</a>
+  <div class="sn-wrap">
+  <div class="sn-fill" id="sn-fill"></div>
+  <ol class="sn-list">
+    <li><button class="sn-item" data-s="1" onclick="go(1)"><span class="sn-dot">1</span><span class="sn-txt">Choose the person</span></button></li>
+    <li><button class="sn-item" data-s="2" onclick="go(2)"><span class="sn-dot">2</span><span class="sn-txt">The questionnaire</span></button></li>
+    <li><button class="sn-item" data-s="3" onclick="go(3)"><span class="sn-dot">3</span><span class="sn-txt">Write the lyrics</span></button></li>
+    <li><button class="sn-item" data-s="4" onclick="go(4)"><span class="sn-dot">4</span><span class="sn-txt">Pronunciation</span></button></li>
+    <li><button class="sn-item" data-s="5" onclick="go(5)"><span class="sn-dot">5</span><span class="sn-txt">Choose a style</span></button></li>
+    <li><button class="sn-item" data-s="6" onclick="go(6)"><span class="sn-dot">6</span><span class="sn-txt">Generate the song</span></button></li>
+    <li><button class="sn-item" data-s="7" onclick="go(7)"><span class="sn-dot">7</span><span class="sn-txt">Deliver it</span></button></li>
+  </ol>
+  </div>
+</nav>
+
+<main>
+<section class="step active" id="s0">
+  <div id="hero">
+    <div class="kicker">Interactive guide · nothing to install</div>
+    <h1>In 15 minutes, you will have a <em>real song</em> for someone you love</h1>
+    <p class="sub">Not a generic AI song. One with their name, your private jokes, and the moment only the two of you remember.</p>
+    <div class="demo demo-hero">
+      <h3>Hear the result</h3>
+      <p>This Hebrew demo was made in 15 minutes. The same method works for an English song.</p>
+      <audio controls src="../assets/demo.mp3"></audio>
+    </div>
+    <button class="cta" onclick="go(1)">Let's start →</button>
+  </div>
+  <div class="facts">
+    <div class="fact"><b>15</b><span>minutes</span></div>
+    <div class="fact"><b>0</b><span>musical experience</span></div>
+    <div class="fact"><b>$0</b><span>to start</span></div>
+  </div>
+  <div class="note"><b>What do you need?</b> A <a href="https://suno.com" target="_blank" rel="noopener">Suno</a> account and ten focused minutes thinking about the person. No software, no code, and it works on a phone.</div>
+  <div class="note"><b>This is a text guide.</b> There are no videos: you read, copy, and paste. Make sure that format works for you.</div>
+</section>
+
+<section class="step" id="s1">
+  <div class="step-head">
+    <div class="step-meta"><span class="step-num">Step 1 of 7</span><span class="step-time">2 minutes</span></div>
+    <h2>Choose the person and the moment</h2>
+    <p class="step-sub">This decision shapes everything that follows. Do not skip it.</p>
+  </div>
+  <p>The most common mistake is starting with “I want to make a song” and only then deciding who it is for. That creates something polished that touches nobody.</p>
+  <p><strong>Start with the person.</strong> Pick one specific person — not “my family” or “the team at work.”</p>
+  <h3>Three questions before you continue</h3>
+  <ol>
+    <li><strong>Who?</strong> One person. Use their first name.</li>
+    <li><strong>When will they hear it?</strong> A birthday, wedding, graduation, goodbye, or an ordinary Tuesday.</li>
+    <li><strong>What should they feel?</strong> Joy? Longing? Seen? Choose one feeling.</li>
+  </ol>
+  <div class="note"><b>Tip:</b> “An ordinary Tuesday” works beautifully. A song for no occasion is often more surprising than a birthday song.</div>
+  <h3>Why this matters</h3>
+  <div class="compare">
+    <div class="comp no"><span class="tag">✕ No clear choice</span>“An emotional birthday song for someone special” sounds like it could be for anyone.</div>
+    <div class="comp yes"><span class="tag">✓ A real choice</span>“A song for Mom's 60th that makes her feel we noticed everything she gave up” gives the song somewhere real to go.</div>
+  </div>
+  <div class="quiz" data-answer="1">
+    <div class="qh">🎯 Quick check</div><div class="qq">Where should you start?</div>
+    <button class="opt" onclick="ans(this,0)">By choosing a music genre</button>
+    <button class="opt" onclick="ans(this,1)">With one person and the feeling you want to create</button>
+    <button class="opt" onclick="ans(this,2)">By writing the lyrics</button>
+    <div class="qfeed">✓ Exactly. Every other step follows from this.</div>
+  </div>
+  <div class="nav"><button onclick="go(0)">← Back</button><button class="primary" onclick="go(2)">Next step →</button></div>
+</section>
+
+<section class="step" id="s2">
+  <div class="step-head">
+    <div class="step-meta"><span class="step-num">Step 2 of 7</span><span class="step-time">5 minutes</span></div>
+    <h2>Answer the questionnaire</h2>
+    <p class="step-sub">Eight questions. In the next step, your answers become a ready-to-copy prompt automatically.</p>
+  </div>
+  <div class="bigcall"><h3>✍️ Write here — do not just read</h3><p>Your answers stay in your browser. In step 3 they are assembled into a prompt, so you will not have to copy each one manually.</p></div>
+  <p>The difference between a moving song and generic AI output is <strong>the specificity of what you give it</strong>. The tool can write. It knows nothing about your person.</p>
+  <p>Short answers are fine. Make them specific.</p>
+  <div class="formbar" id="formbar"><span class="fb-txt">Your answers</span><span class="fb-n" id="fb-n">0 of 8</span></div>
+
+  <div class="qcard" id="c1"><div class="qn">Question 1</div><div class="qt">What is their name — and what do you actually call them?</div><div class="qw">A nickname usually feels more personal than a formal name.</div><textarea class="ans" id="q1" rows="1" placeholder="For example: Charlotte, but I call her Charlie"></textarea></div>
+  <div class="qcard" id="c2"><div class="qn">Question 2</div><div class="qt">What is the occasion, and what makes this year different?</div><div class="qw">“40th birthday” is a label. “First birthday since becoming a mother” is a song.</div><textarea class="ans" id="q2" rows="2" placeholder="For example: Her 35th birthday, the first one since the baby was born"></textarea></div>
+  <div class="qcard" id="c3"><div class="qn">Question 3</div><div class="qt">Describe one specific moment. Not a story — a moment.</div><div class="qw">Where were you? What did they say? The small detail makes it real.</div><textarea class="ans" id="q3" rows="3" placeholder="For example: We drank coffee on the balcony at 6 a.m. and she said she couldn't believe we made it here"></textarea></div>
+  <div class="qcard" id="c4"><div class="qn">Question 4</div><div class="qt">What sentence do they always say?</div><div class="qw">Put it in the chorus and they will recognize themselves instantly.</div><textarea class="ans" id="q4" rows="1" placeholder='For example: “It always works out in the end”'></textarea></div>
+  <div class="qcard" id="c5"><div class="qn">Question 5</div><div class="qt">What do they do that only the two of you find funny?</div><div class="qw">The private joke proves this song could not belong to anyone else.</div><textarea class="ans" id="q5" rows="2" placeholder="For example: She sings loudly in the car and always gets the lyrics wrong"></textarea></div>
+  <div class="qcard" id="c6"><div class="qn">Question 6</div><div class="qt">What have you wanted to tell them but never said?</div><div class="qw">Take your time. This often becomes the line that makes them cry.</div><textarea class="ans" id="q6" rows="3" placeholder="For example: I saw how much she gave up this year and never thanked her"></textarea></div>
+  <div class="qcard" id="c7"><div class="qn">Question 7</div><div class="qt">What music do they actually listen to?</div><div class="qw">What they play alone in the car — not what they say they like.</div><textarea class="ans" id="q7" rows="1" placeholder="For example: Quiet indie ballads, acoustic guitar, warm female vocal"></textarea></div>
+  <div class="qcard" id="c8"><div class="qn">Question 8</div><div class="qt">If the song makes them cry, which line will do it?</div><div class="qw">If you know the answer, you have a song. If not, return to question 6.</div><textarea class="ans" id="q8" rows="2" placeholder="For example: The line where it says I saw her"></textarea></div>
+
+  <div class="note"><b>Do not skip questions 3, 5, and 6.</b> They produce the material an AI cannot invent. Without them, the song may be pretty but could belong to anyone.</div>
+  <div class="quiz" data-answer="2">
+    <div class="qh">🎯 Quick check</div><div class="qq">What makes an AI song moving?</div>
+    <button class="opt" onclick="ans(this,0)">Choosing the perfect genre</button>
+    <button class="opt" onclick="ans(this,1)">Using the most advanced model</button>
+    <button class="opt" onclick="ans(this,2)">Specific details only you know</button>
+    <div class="qfeed">✓ Right. Everyone has the tool. Only you have the details.</div>
+  </div>
+  <div class="nav"><button onclick="go(1)">← Back</button><button class="primary" onclick="go(3)">Next step →</button></div>
+</section>
+
+<section class="step" id="s3">
+  <div class="step-head"><div class="step-meta"><span class="step-num">Step 3 of 7</span><span class="step-time">2 minutes</span></div><h2>Turn the answers into lyrics</h2><p class="step-sub">Let AI do the writing — using your material.</p></div>
+  <p>Do not wrestle with the lyrics alone. Give the prompt below to <a href="https://chatgpt.com" target="_blank" rel="noopener">ChatGPT</a> or <a href="https://claude.ai" target="_blank" rel="noopener">Claude</a>.</p>
+  <div class="warnbox" id="warn-empty"><b>You have not answered the questionnaire yet.</b> You can edit the prompt manually, but <a href="javascript:go(2)">returning to step 2</a> will fill it for you.</div>
+  <p>The prompt is built from your answers. <strong>You can edit it here</strong> before copying.</p>
+  <div class="gen">
+    <div class="cb-head"><span class="cb-label">Your prompt — ready for ChatGPT or Claude</span><span style="display:flex;gap:8px"><button class="cb-btn" onclick="buildPrompt(true)">Refresh from answers</button><button class="cb-btn" onclick="cpGen(this)">Copy</button></span></div>
+    <textarea id="genprompt" spellcheck="false"></textarea><div class="gfoot">Edits are saved. “Refresh from answers” restores the generated version.</div>
+  </div>
+  <h3>After you get the first draft</h3>
+  <p>The first version is usually a little generic. Ask for a revision:</p>
+  <div class="copybox"><div class="cb-head"><span class="cb-label">Revision request</span><button class="cb-btn" onclick="cp(this)">Copy</button></div><pre>This is too polished and too generic. Rewrite it:
+- Remove every line that could have been written for another person
+- Put the specific moment from item 3 into the first verse
+- Use the exact sentence from item 4 in the chorus
+- Write in a natural, conversational voice, as if I were speaking to them</pre></div>
+  <div class="note"><b>A simple test:</b> Could these lyrics have been written for somebody else? If yes, they are not ready.</div>
+  <div class="quiz" data-answer="0"><div class="qh">🎯 Quick check</div><div class="qq">How do you know the lyrics are ready?</div><button class="opt" onclick="ans(this,0)">They could not belong to anyone else</button><button class="opt" onclick="ans(this,1)">Every line rhymes</button><button class="opt" onclick="ans(this,2)">There are at least three verses</button><div class="qfeed">✓ That is the only test that matters.</div></div>
+  <div class="nav"><button onclick="go(2)">← Back</button><button class="primary" onclick="go(4)">Next step →</button></div>
+</section>
+
+<section class="step" id="s4">
+  <div class="step-head"><div class="step-meta"><span class="step-num">Step 4 of 7</span><span class="step-time">2 minutes</span></div><h2>Make every name pronounceable</h2><p class="step-sub">A beautiful song falls apart the moment it says their name wrong.</p></div>
+  <p>Suno sometimes guesses the pronunciation of names, places, abbreviations, and words borrowed from another language. Do not wait until the final version to discover the mistake.</p>
+  <h3>Use a pronunciation pass</h3>
+  <ol class="howto">
+    <li>Highlight every name, place, and unusual word in the lyrics.</li>
+    <li>Read each one out loud exactly as it is written.</li>
+    <li>If it is ambiguous, replace it with a phonetic spelling or split it into syllables.</li>
+    <li>Generate a short test before spending time on the full song.</li>
+  </ol>
+  <div class="compare"><div class="comp no"><span class="tag">✕ Ambiguous</span><strong>Siobhan</strong> may be guessed incorrectly.</div><div class="comp yes"><span class="tag">✓ Pronunciation cue</span><strong>Shi-vawn</strong> gives the model a clearer signal.</div></div>
+  <div class="note"><b>Writing a song in Hebrew?</b> Use the free <a href="https://nakdan.dicta.org.il/" target="_blank" rel="noopener">Dicta Nakdan</a> to add niqqud, especially to names. It is more reliable for Hebrew vocalization than asking a general-purpose language model.</div>
+  <div class="quiz" data-answer="1"><div class="qh">🎯 Quick check</div><div class="qq">What should you do with an unusual name?</div><button class="opt" onclick="ans(this,0)">Trust the model to work it out</button><button class="opt" onclick="ans(this,1)">Add a phonetic cue and test it early</button><button class="opt" onclick="ans(this,2)">Remove the name from the song</button><div class="qfeed">✓ Test the signal before you build around it.</div></div>
+  <div class="support"><div class="badge">☕</div><div class="stxt"><h4>Is this guide helping?</h4><p>There are no ads and nothing to buy. A coffee is a kind way to support the work.</p></div><a class="sbtn" href="https://ko-fi.com/arieleli01" target="_blank" rel="noopener" data-track="support_click">Buy me a coffee</a></div>
+  <div class="nav"><button onclick="go(3)">← Back</button><button class="primary" onclick="go(5)">Next step →</button></div>
+</section>
+
+<section class="step" id="s5">
+  <div class="step-head"><div class="step-meta"><span class="step-num">Step 5 of 7</span><span class="step-time">1 minute</span></div><h2>Choose a musical style</h2><p class="step-sub">Choose for their taste, not yours.</p></div>
+  <p>Suno has a style field separate from the lyrics. Describe what the person really listens to.</p>
+  <h3>The rule</h3><p><strong>Keep the production cleaner than you think.</strong> Dense arrangements bury the words, and the words are the gift.</p>
+  <div class="copybox"><div class="cb-head"><span class="cb-label">Style example</span><button class="cb-btn" onclick="cp(this)">Copy</button></div><pre>intimate acoustic pop ballad, warm vocal, slow tempo, sparse arrangement, clear lyrics, emotional but restrained</pre></div>
+  <ul><li><strong>Intimate</strong> and <strong>warm</strong> help the song feel close.</li><li><strong>Slow tempo</strong> keeps the words understandable.</li><li><strong>Sparse arrangement</strong> leaves room for the story.</li></ul>
+  <div class="note"><b>Male or female voice?</b> Think about who is “speaking” in the song — you. A voice closer to your own often feels more personal.</div>
+  <div class="quiz" data-answer="2"><div class="qh">🎯 Quick check</div><div class="qq">Which production fits a personal song best?</div><button class="opt" onclick="ans(this,0)">A rich arrangement with many instruments</button><button class="opt" onclick="ans(this,1)">Fast and highly energetic</button><button class="opt" onclick="ans(this,2)">Intimate and spacious enough to hear the words</button><div class="qfeed">✓ The lyrics are the gift. Production should support them.</div></div>
+  <div class="nav"><button onclick="go(4)">← Back</button><button class="primary" onclick="go(6)">Next step →</button></div>
+</section>
+
+<section class="step" id="s6">
+  <div class="step-head"><div class="step-meta"><span class="step-num">Step 6 of 7</span><span class="step-time">2 minutes</span></div><h2>Generate, judge, and repair</h2><p class="step-sub">The first version is almost never the final one.</p></div>
+  <ol><li>Open <a href="https://suno.com/create" target="_blank" rel="noopener"><strong>Suno</strong></a> and choose <strong>Custom</strong>.</li><li>Paste the checked lyrics into the lyrics field.</li><li>Paste your style into the style field.</li><li>Generate — you will receive two versions.</li></ol>
+  <h3>Judge with three questions</h3>
+  <ul><li><strong>Can you hear every word?</strong> If not, the style is too busy or too fast.</li><li><strong>Are the names pronounced correctly?</strong> If not, return to step 4.</li><li><strong>Does the chorus stick?</strong> If not, it may be too long. Shorten it.</li></ul>
+  <div class="note"><b>Repair instead of restarting:</b> If one line is wrong, use <a href="https://help.suno.com/en/articles/6141505" target="_blank" rel="noopener"><b>Song Editor → Replace Section</b></a>. Regenerate only that section and keep what already works.</div>
+  <div class="note"><b>Expect three or four versions.</b> That is normal. Almost nobody gets the final song on the first try.</div>
+  <div class="quiz" data-answer="1"><div class="qh">🎯 Quick check</div><div class="qq">One line sounds wrong. What do you do?</div><button class="opt" onclick="ans(this,0)">Generate the entire song again</button><button class="opt" onclick="ans(this,1)">Use Replace Section for that line</button><button class="opt" onclick="ans(this,2)">Delete the line</button><div class="qfeed">✓ It saves credits and preserves the parts that work.</div></div>
+  <div class="nav"><button onclick="go(5)">← Back</button><button class="primary" onclick="go(7)">Final step →</button></div>
+</section>
+
+<section class="step" id="s7">
+  <div class="step-head"><div class="step-meta"><span class="step-num">Step 7 of 7</span><span class="step-time">1 minute</span></div><h2>Deliver the song</h2><p class="step-sub">The easiest part to overlook may be the most important.</p></div>
+  <p>You made something meaningful. Do not bury it between two ordinary messages.</p>
+  <h3>Three rules</h3>
+  <ul><li><strong>Be there.</strong> Play it in person or on a video call. You want to see the moment.</li><li><strong>Do not explain first.</strong> “I made something for you — listen.” That is enough.</li><li><strong>Stay quiet while it plays.</strong> Resist the urge to apologize for the production.</li></ul>
+  <div class="note"><b>If they ask “Is this AI?”</b> Say yes without apologizing. The tool performed it. The words, details, and thought are yours.</div>
+  <div class="quiz" data-answer="0"><div class="qh">🎯 Quick check</div><div class="qq">What matters most when you deliver it?</div><button class="opt" onclick="ans(this,0)">Be present and do not explain beforehand</button><button class="opt" onclick="ans(this,1)">Send it late at night</button><button class="opt" onclick="ans(this,2)">Explain how you made it first</button><div class="qfeed">✓ The surprise is half the gift.</div></div>
+  <div class="nav"><button onclick="go(6)">← Back</button><button class="primary" onclick="go(8)">I'm done →</button></div>
+</section>
+
+<section class="step" id="s8">
+  <div id="finish"><div class="big">🎵</div><h2>You have a song</h2><p>If it gave someone chills, you did it right.</p></div>
+  <div class="share"><h3>Made a song? I would love to hear it</h3><p>I collect songs created with this guide. Send yours if you are proud of it — and tell me if something did not work, too. That is how the guide improves.</p><a class="cta" href="https://wa.me/972544260918?text=Hi%20Ariel%2C%20I%20made%20a%20song%20with%20your%20guide" target="_blank" rel="noopener" data-track="whatsapp_click" style="text-decoration:none">Send it on WhatsApp →</a></div>
+  <div class="note"><b>Know someone with an occasion coming up?</b> Send them the guide. It takes 15 minutes and can become a memory for years.</div>
+  <div class="support"><div class="badge">☕</div><div class="stxt"><h4>If the song turned out well</h4><p>There are no ads and nothing to sell. If the guide helped, a coffee is a lovely way to say thanks.</p></div><a class="sbtn" href="https://ko-fi.com/arieleli01" target="_blank" rel="noopener" data-track="support_click">Buy me a coffee</a></div>
+  <div class="nav"><button onclick="go(7)">← Back</button><button class="primary" onclick="go(0)">Start over</button></div>
+</section>
+</main>
+
+<footer>Built by Ariel Elisheiev · <a href="https://www.linkedin.com/in/ariel-elishayev-0ba10a346" target="_blank" rel="noopener">LinkedIn</a> · <a href="https://wa.me/972544260918?text=Hi%20Ariel%2C%20I%20made%20a%20song%20with%20your%20guide" target="_blank" rel="noopener" data-track="whatsapp_click">WhatsApp</a></footer>
+
+<script defer src="https://cloud.umami.is/script.js" data-website-id="bded56d1-e448-4067-b487-5b260360f044"></script>
+<script>
+var TOTAL = 7, cur = 0, seen = {};
+var _queue = [];
+function _provider(){
+  if (window.umami && typeof window.umami.track === 'function') return function(n,p){ window.umami.track(n,p); };
+  if (typeof window.plausible === 'function') return function(n,p){ window.plausible(n,{ props:p }); };
+  if (typeof window.gtag === 'function') return function(n,p){ window.gtag('event',n,p); };
+  if (window.goatcounter && window.goatcounter.count) return function(n){ window.goatcounter.count({ path:'event/'+n, event:true }); };
+  return null;
+}
+function _flush(){ var send=_provider(); if(!send)return false; while(_queue.length){var e=_queue.shift();try{send(e[0],e[1]);}catch(err){}} return true; }
+function track(name,props){ props=props||{}; props.language='en'; var send=_provider(); if(send){try{send(name,props);}catch(e){}return;} if(_queue.length<60)_queue.push([name,props]); }
+var _tries=0; var _poll=setInterval(function(){if(_flush()||++_tries>40)clearInterval(_poll);},250); window.addEventListener('load',_flush);
+
+var store=(function(){try{localStorage.setItem('__t','1');localStorage.removeItem('__t');return{get:function(k){return localStorage.getItem(k)},set:function(k,v){localStorage.setItem(k,v)}};}catch(e){var m={};return{get:function(k){return m[k]||null},set:function(k,v){m[k]=v}};}})();
+try{seen=JSON.parse(store.get('sn_en_steps')||'{}');}catch(e){seen={};}
+
+function go(n){
+  var el=document.getElementById('s'+n); if(!el)return;
+  document.querySelectorAll('.step').forEach(function(s){s.classList.remove('active');}); el.classList.add('active');
+  var prev=cur; cur=n;
+  if(n>=1&&n<=TOTAL){var isNew=!seen[n];seen[n]=1;store.set('sn_en_steps',JSON.stringify(seen));track('step_view',{step:n,first_time:isNew?1:0});if(n===1&&prev===0)track('guide_start');if(n===TOTAL&&isNew)track('guide_complete',{steps_seen:Object.keys(seen).length});}
+  if(n===8)track('outro_click'); if(n===3)buildPrompt(false); closeNav(); paint(); window.scrollTo({top:0,behavior:'smooth'});
+}
+function paint(){var done=Object.keys(seen).length;if(done>TOTAL)done=TOTAL;document.getElementById('bar').style.width=(done/TOTAL*100)+'%';document.getElementById('count').textContent=done+' / '+TOTAL;paintNav();}
+function navOpen(){return document.getElementById('sidenav').classList.contains('open');}
+function toggleNav(e){if(e)e.stopPropagation();navOpen()?closeNav():openNav();}
+function openNav(){document.getElementById('sidenav').classList.add('open');document.getElementById('navscrim').classList.add('open');document.getElementById('stepbtn').setAttribute('aria-expanded','true');track('nav_open',{step:cur});}
+function closeNav(){document.getElementById('sidenav').classList.remove('open');document.getElementById('navscrim').classList.remove('open');document.getElementById('stepbtn').setAttribute('aria-expanded','false');}
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&navOpen())closeNav();});
+function navLabel(){if(cur===0)return'Start here';if(cur===8)return'Finished';var t=document.querySelector('.sn-item[data-s="'+cur+'"] .sn-txt');return t?('Step '+cur+' · '+t.textContent):'Start here';}
+function paintNav(){
+  var lbl=document.getElementById('sb-txt');if(lbl)lbl.textContent=navLabel();var items=document.querySelectorAll('.sn-item');if(!items.length)return;
+  items.forEach(function(b){var n=parseInt(b.dataset.s,10),isCur=n===cur,isDone=!!seen[n]&&!isCur;b.classList.toggle('current',isCur);b.classList.toggle('done',isDone);b.querySelector('.sn-dot').textContent=isDone?'✓':n;if(isCur)b.setAttribute('aria-current','step');else b.removeAttribute('aria-current');});
+  var fill=document.getElementById('sn-fill');if(fill){var maxN=0;for(var i=1;i<=TOTAL;i++)if(seen[i])maxN=i;if(cur>maxN&&cur<=TOTAL)maxN=cur;var list=document.querySelector('.sn-list');if(maxN>0&&list){var target=document.querySelector('.sn-item[data-s="'+maxN+'"]');if(target){var h=(target.offsetTop+target.offsetHeight/2)-16;fill.style.height=Math.max(0,h)+'px';}}else fill.style.height='0px';}
+}
+
+var QN=8,answers={};try{answers=JSON.parse(store.get('sn_en_answers')||'{}');}catch(e){answers={};}
+function autoGrow(el){el.style.height='auto';el.style.height=(el.scrollHeight+2)+'px';}
+function initForm(){for(var i=1;i<=QN;i++){(function(n){var el=document.getElementById('q'+n);if(!el)return;if(answers[n])el.value=answers[n];autoGrow(el);el.addEventListener('input',function(){answers[n]=el.value;store.set('sn_en_answers',JSON.stringify(answers));autoGrow(el);paintForm();});el.addEventListener('blur',function(){if(el.value.trim())track('answer_filled',{q:n});});})(i);}paintForm();}
+function filledCount(){var n=0;for(var i=1;i<=QN;i++)if((answers[i]||'').trim())n++;return n;}
+function paintForm(){for(var i=1;i<=QN;i++){var card=document.getElementById('c'+i);if(card)card.classList.toggle('filled',!!(answers[i]||'').trim());}var n=filledCount(),el=document.getElementById('fb-n');if(el)el.textContent=n+' of '+QN;var bar=document.getElementById('formbar');if(bar){bar.classList.toggle('done',n===QN);bar.querySelector('.fb-txt').textContent=n===QN?'Great — everything is ready':'Your answers';}}
+
+var PROMPT_LABELS=['Name or nickname','The occasion and what makes it different','One specific moment I remember','Something they always say','Something only we find funny','What I wanted to say but never did','Music they actually enjoy','The line that should move them'];
+function promptText(){var lines=['I want to write a personal song for someone I love.','Use the details below to write the lyrics.','','The details:'];for(var i=1;i<=QN;i++){var v=(answers[i]||'').trim().replace(/\s*\n\s*/g,' ');lines.push(i+'. '+PROMPT_LABELS[i-1]+': '+(v||'—'));}return lines.concat(['','Writing rules:','- Use natural, conversational language — not poetic or formal language','- Structure: verse, chorus, verse, chorus, bridge, chorus','- Keep the chorus short and repeatable','- Use my specific details instead of clichés','- Keep the lines short. A song is not a letter.','- Avoid rare or overly literary words','- Return only the lyrics, with no explanation']).join('\n');}
+function buildPrompt(force){var ta=document.getElementById('genprompt');if(!ta)return;var saved=store.get('sn_en_prompt');ta.value=(!force&&saved)?saved:promptText();if(force){store.set('sn_en_prompt',ta.value);track('prompt_refresh');}var warn=document.getElementById('warn-empty');if(warn)warn.classList.toggle('show',filledCount()===0);}
+function initPrompt(){var ta=document.getElementById('genprompt');if(ta)ta.addEventListener('input',function(){store.set('sn_en_prompt',ta.value);});}
+function copied(btn){var old=btn.textContent;btn.textContent='✓ Copied';btn.classList.add('done');setTimeout(function(){btn.textContent=old;btn.classList.remove('done');},1800);}
+function cpGen(btn){var ta=document.getElementById('genprompt'),done=function(){copied(btn);};store.set('sn_en_copied','1');track('copy',{block:'generated_prompt',step:cur,filled:filledCount()});if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(ta.value).then(done,function(){fallback(ta.value,done);});else fallback(ta.value,done);}
+function cp(btn){var box=btn.closest('.copybox'),txt=box.querySelector('pre').innerText,label=box.querySelector('.cb-label').textContent.trim(),done=function(){copied(btn);};track('copy',{block:label,step:cur});if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(done,function(){fallback(txt,done);});else fallback(txt,done);}
+function fallback(txt,cb){var ta=document.createElement('textarea');ta.value=txt;ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();try{document.execCommand('copy');cb();}catch(e){}document.body.removeChild(ta);}
+function ans(btn,idx){var quiz=btn.closest('.quiz'),correct=parseInt(quiz.dataset.answer,10);quiz.querySelectorAll('.opt').forEach(function(o,i){o.disabled=true;if(i===correct)o.classList.add('right');});if(idx!==correct)btn.classList.add('wrong');quiz.querySelector('.qfeed').classList.add('show');track('quiz',{step:cur,correct:idx===correct?1:0});}
+document.addEventListener('click',function(e){var a=e.target.closest('a[href]');if(!a)return;var tag=a.getAttribute('data-track');if(tag){track(tag,{step:cur});return;}var h=a.getAttribute('href')||'';if(h.indexOf('suno.com')>-1)track('suno_click',{step:cur});else if(h.indexOf('chatgpt.com')>-1)track('chatgpt_click',{step:cur});else if(h.indexOf('claude.ai')>-1)track('claude_click',{step:cur});});
+document.addEventListener('play',function(e){if(e.target.tagName==='AUDIO')track('demo_play',{step:cur,before_start:cur===0?1:0});},true);
+var exitSent=false,startedAt=Date.now();function sendExit(){if(exitSent)return;exitSent=true;var maxStep=0;for(var i=1;i<=TOTAL;i++)if(seen[i])maxStep=i;track('exit',{max_step:maxStep,answers:filledCount(),copied:store.get('sn_en_copied')?1:0,seconds:Math.round((Date.now()-startedAt)/1000)});}
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='hidden')sendExit();});window.addEventListener('pagehide',sendExit);
+initForm();initPrompt();buildPrompt(false);paint();track('landing');
+</script>
+</body>
+</html>

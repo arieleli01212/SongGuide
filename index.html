@@ -7,13 +7,33 @@
 <meta name="description" content="מדריך חינמי בעברית ליצירת שיר אישי עם AI ב-7 שלבים, כ-15 דקות: שאלון, כתיבת מילים, ניקוד שמות, בחירת סגנון וייצור ב-Suno. בלי ידע מוזיקלי ובלי התקנות.">
 <link rel="canonical" href="https://songuide.open-spaces.xyz/">
 <link rel="alternate" hreflang="he-IL" href="https://songuide.open-spaces.xyz/">
+<link rel="alternate" hreflang="en" href="https://songuide.open-spaces.xyz/en/">
 <link rel="alternate" hreflang="x-default" href="https://songuide.open-spaces.xyz/">
+<script>
+(function(){
+  var key = 'songuide_language';
+  window.setGuideLanguage = function(lang){
+    try { localStorage.setItem(key, lang); } catch(e){}
+  };
+  try {
+    var saved = localStorage.getItem(key);
+    var browser = ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase();
+    if (saved === 'en' || (!saved && browser && browser.indexOf('he') !== 0)) {
+      var target = new URL('en/', document.baseURI);
+      target.search = location.search;
+      target.hash = location.hash;
+      location.replace(target.href);
+    }
+  } catch(e){}
+})();
+</script>
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
 <meta name="author" content="אריאל אלישייב">
 <meta property="og:title" content="שיר ברבע שעה — מדריך ליצירת שיר אישי עם AI">
 <meta property="og:description" content="יוצרים שיר אישי למי שאתם אוהבים. שבעה שלבים, רבע שעה, בלי ידע מוזיקלי ובלי להתקין כלום.">
 <meta property="og:type" content="article">
 <meta property="og:locale" content="he_IL">
+<meta property="og:locale:alternate" content="en_US">
 <meta property="og:url" content="https://songuide.open-spaces.xyz/">
 <meta property="og:site_name" content="שיר ברבע שעה">
 <meta property="og:image" content="https://songuide.open-spaces.xyz/assets/og.png">
@@ -26,7 +46,7 @@
 <meta name="twitter:image" content="https://songuide.open-spaces.xyz/assets/og.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&amp;display=swap" rel="stylesheet">
 <style>
 :root{
   /* warm light system */
@@ -68,6 +88,14 @@ a{color:var(--accent)}
 #bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent-soft),var(--accent));
   transition:width .45s cubic-bezier(.4,0,.2,1)}
 #count{font-size:13px;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.lang-link{display:inline-flex;align-items:center;justify-content:center;min-width:42px;height:34px;
+  padding:0 12px;border:1.5px solid var(--line);border-radius:99px;background:var(--card);
+  color:var(--text-body);font-size:13px;font-weight:800;line-height:1;text-decoration:none;
+  box-shadow:var(--shadow-sm);transition:border-color .15s,color .15s,background-color .15s,transform .15s}
+.lang-link:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-wash)}
+.lang-link:active{transform:scale(.96)}
+.lang-link:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.side-lang{margin-top:18px;margin-right:4px}
 
 /* current-step button that opens the step list on phones */
 #stepbtn{flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;
@@ -122,6 +150,14 @@ main{max-width:var(--max);margin:0 auto;padding:92px 20px 120px}
   #sidenav .sn-item{font-size:16px;padding:11px 8px}
   #sidenav .sn-dot{width:27px;height:27px}
   .sn-wrap{max-width:var(--max);margin:0 auto}
+  .side-lang{display:none}
+}
+
+@media(max-width:520px){
+  #topbar .inner{gap:8px;padding:0 10px}
+  #brand{font-size:13px}
+  #count{display:none}
+  .lang-link{min-width:38px;height:32px;padding:0 10px}
 }
 
 @media(min-width:1180px){
@@ -492,6 +528,8 @@ footer a{text-decoration:none;font-weight:600}
       <span class="sb-chev" aria-hidden="true">▼</span>
     </button>
     <div id="count">0 / 7</div>
+    <a class="lang-link top-lang" href="en/" lang="en" hreflang="en"
+       onclick="setGuideLanguage('en')" aria-label="החלפת שפת המדריך לאנגלית">EN</a>
   </div>
   <div id="bar-wrap"><div id="bar"></div></div>
 </div>
@@ -499,6 +537,8 @@ footer a{text-decoration:none;font-weight:600}
 
 <nav id="sidenav" aria-label="שלבי המדריך">
   <button class="sn-brand" onclick="go(0)" style="background:none;border:none;font-family:inherit;cursor:pointer;color:var(--text);display:block">שיר ב<span>15 דקות</span></button>
+  <a class="lang-link side-lang" href="en/" lang="en" hreflang="en"
+     onclick="setGuideLanguage('en')" aria-label="החלפת שפת המדריך לאנגלית">EN</a>
   <div class="sn-wrap">
   <div class="sn-fill" id="sn-fill"></div>
   <ol class="sn-list">
@@ -1032,6 +1072,7 @@ function _flush(){
 
 function track(name, props){
   props = props || {};
+  props.language = 'he';
   var send = _provider();
   if (send) { try { send(name, props); } catch(e){} return; }
   if (_queue.length < 60) _queue.push([name, props]);
